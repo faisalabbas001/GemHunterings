@@ -1,0 +1,50 @@
+input[type="search"] {
+    padding: 8px;
+  }
+  
+  
+  
+  input[type="search"]:hover + div svg {
+    opacity: 1;
+  }
+  
+  input[type="search"] + div svg {
+    opacity: 0;
+  }
+
+  /* Style the clear button */
+  .search-input::-webkit-search-clear-button {
+    -webkit-appearance: none;
+    appearance: none;
+    color: blue;
+  }
+  .search-input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .text-overflow-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .custom-shadow {
+    box-shadow: rgba(0, 0, 0, 0.59) 6px 6px 20px 6px;
+  }
+
+
+  @media (max-width: 320px) {
+    .flex-1 {
+      min-width: 0; /* Prevents input from growing too large */
+    }
+    
+    .pr-12 {
+      padding-right: 3rem; /* Adjust padding if necessary */
+    }
+  
+    .text-xs {
+      font-size: 0.75rem; /* Smaller font size for very small screens */
+    }
+  }
+  

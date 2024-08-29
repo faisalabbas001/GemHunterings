@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'PoseyTextured';
+  src: url('/PoseyTexturesRegular.woff2') format('woff2'),
+       url('/PoseyTexturedRegular.woff') format('woff');
+}
+
+body {
+  background-image: url("/bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: 'PoseyTextured', 'Montserrat', sans-serif;
+}
