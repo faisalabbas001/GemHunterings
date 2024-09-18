@@ -1,20 +1,34 @@
+import './App.css';
+import { useState, useEffect } from 'react';
+import Header from './Components/Header';
+import Showdow from './Components/Showdow';
+import Footer from './Components/Footer';
+import Loader from './Loader';
 
-import './App.css'
-import Header from './Components/Header'
-import Showdow from './Components/Showdow'
-import Shadow2 from './Components/Shadow2'
-import Footer from './Components/Footer'
 function App() {
- 
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    
+    const timer = setTimeout(() => {
+      setLoading(false);  
+    }, 2000); 
+
+    return () => clearTimeout(timer); 
+  }, []);
 
   return (
     <>
-      <Header />
-      <Showdow/>
-      <Shadow2/>
-      <Footer/>
+      <Loader loading={loading} /> 
+      {!loading && (
+        <>
+          <Header />
+          <Showdow />
+          <Footer />
+        </>
+      )}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
