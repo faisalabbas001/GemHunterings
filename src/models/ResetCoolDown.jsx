@@ -1,4 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import {
+  getBalance,
+  readContract,
+  simulateContract,
+  writeContract,
+  waitForTransactionReceipt,
+} from '@wagmi/core';
+import { config } from '../BlockChainContext/config';
+import { nonceManager, parseEther } from 'viem';
+import {
+  abi,
+  contractAddress,
+  testTokenAddress,
+  erc20Abi,
+} from '../BlockChainContext/helper';
+import { useAccount, useBalance } from 'wagmi';
+import { sepolia } from 'viem/chains';
 
 export default function ResetCoolDown() {
   const [open, setOpen] = useState(false);
@@ -34,6 +51,45 @@ export default function ResetCoolDown() {
    
     return `${days}d ${hours}h ${minutes}m ${seconds}s`;
   };
+  const handleReset=async ()=>{
+
+    console.log("reset");
+        try {
+      console.log(eth);
+      const result = await readContract(config, {
+        abi,
+        address: contractAddress,
+        functionName: 'getUserStakePercentage',
+      });
+      console.log(result);
+
+      let noOfEth;
+      if (result.data < 0.5) {
+        noOfEth=0.01;
+      } else if (result.data >= 0.5 && result.data < 1) {
+        noOfEth=0.02;
+      } else if (result.data >= 1) {
+        noOfEth=0.03;
+      }
+      try {
+        const { request } = await simulateContract(config, {
+          abi: abi,
+          address: contractAddress,
+          functionName: 'purchaseProtection',
+          value: parseEther(noOfEth)
+        });
+        const hash = await writeContract(config, request);
+        const transactionReceipt = await waitForTransactionReceipt(config, {
+          // confirmations: 2,
+          hash: hash,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
  
   useEffect(() => {
@@ -42,8 +98,11 @@ export default function ResetCoolDown() {
     }, 1000);
 
   
+
+  
     return () => clearInterval(timer);
   }, [customDate]);
+
 
   return (
     <div className="text-center">
@@ -85,8 +144,8 @@ export default function ResetCoolDown() {
              
 
 
-              <span className={loading ? 'invisible' : ''}>
-              Reset  
+              <span onClick={handleReset} className={loading ? 'invisible' : ''}>
+              Resett
         </span>
 
         {loading && (

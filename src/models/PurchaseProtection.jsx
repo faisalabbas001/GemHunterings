@@ -1,10 +1,27 @@
 import React, { useState, useEffect } from 'react';
-
+import {
+  getBalance,
+  readContract,
+  simulateContract,
+  writeContract,
+  waitForTransactionReceipt,
+} from '@wagmi/core';
+import { config } from '../BlockChainContext/config';
+import { nonceManager, parseEther } from 'viem';
+import {
+  abi,
+  contractAddress,
+  testTokenAddress,
+  erc20Abi,
+} from '../BlockChainContext/helper';
+import { useAccount, useBalance } from 'wagmi';
+import { sepolia } from 'viem/chains';
+import { parse } from 'postcss';
 export default function PurchaseProtection() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [remainingTime, setRemainingTime] = useState('');
-  const [customDate, setCustomDate] = useState(new Date('2024-09-18T00:00:00'));
+  const [customDate, setCustomDate] = useState(new Date('2024-09-19T00:00:00'));
   const [isTimeUp, setIsTimeUp] = useState(false);
 
   const handleOpen = () => {
@@ -17,8 +34,24 @@ export default function PurchaseProtection() {
 
   const handleClose = () => setOpen(false);
 
-  const handleAddDay = () => {
-    setCustomDate((prevDate) => new Date(prevDate.getTime() + 24 * 60 * 60 * 1000));
+  const handleAddDay = async () => {
+    //setCustomDate((prevDate) => new Date(prevDate.getTime() + 24 * 60 * 60 * 1000));
+    try {
+    
+        const { request } = await simulateContract(config, {
+          abi: abi,
+          address: contractAddress,
+          functionName: 'purchaseProtection',
+        });
+        const hash = await writeContract(config, request);
+        const transactionReceipt = await waitForTransactionReceipt(config, {
+          // confirmations: 2,
+          hash: hash,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+   
   };
 
   const calculateRemainingTime = (targetDate) => {
@@ -53,11 +86,7 @@ export default function PurchaseProtection() {
         onClick={handleOpen}
         className="bg-[#8B0000] rounded-2xl py-2 sm:px-6 text-lg text-white w-full flex items-center justify-center"
       >
-      
         Purchase Protection
-
-        
-        
       </button>
 
       {/* Modal */}
@@ -83,8 +112,7 @@ export default function PurchaseProtection() {
               className="mt-6 bg-red-500 text-white px-4 py-2 rounded w-full"
               disabled={isTimeUp}
               // style={{ filter: isTimeUp ? 'blur(3px)' : 'none' }}
-              style={{backgroundColor: isTimeUp ? 'gray' : 'red'}}
-
+              style={{ backgroundColor: isTimeUp ? 'gray' : 'red' }}
             >
               Add 1 Day
             </button>

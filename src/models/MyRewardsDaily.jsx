@@ -1,4 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { getBalance, readContract,simulateContract,writeContract,waitForTransactionReceipt } from '@wagmi/core';
+import { config } from '../BlockChainContext/config';
+import { nonceManager, parseEther } from "viem";
+import {
+  abi,
+  contractAddress,
+  testTokenAddress,
+  erc20Abi
+} from '../BlockChainContext/helper';
+import { useAccount, useBalance } from 'wagmi';
+import { sepolia } from 'viem/chains';
 
 export default function CollectDailyRewards() {
   const [open, setOpen] = useState(false);
@@ -14,6 +25,7 @@ export default function CollectDailyRewards() {
       setOpen(true);      
     }, 200);
   };
+  const { address: userAddress } = useAccount();
   
  
   const handleClose = () => setOpen(false);
@@ -34,6 +46,27 @@ export default function CollectDailyRewards() {
    
     return `${days}d ${hours}h ${minutes}m ${seconds}s`;
   };
+
+     
+  const handleCollect= async () => {
+    try {
+      console.log("hello");
+      const { request } = await simulateContract(config, {
+        abi: abi,
+        address: contractAddress,
+        functionName: 'cashInDailyRewards',
+        args:[userAddress]
+      });
+      const hash = await writeContract(config, request);
+      const transactionReceipt = await waitForTransactionReceipt(config, {
+        // confirmations: 2,
+        hash: hash,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
 
  
   useEffect(() => {
@@ -85,7 +118,7 @@ export default function CollectDailyRewards() {
             <button className="mt-6  flex justify-center items-center  bg-red-500 text-white px-4 py-2 text-center rounded w-full" disabled={loading}  onClick={handleOpen} >
             
 
-            <span className={loading ? 'invisible' : ''}>
+            <span onClick={handleCollect} className={loading ? 'invisible' : ''}>
         Collect Rewards  
        
         </span>

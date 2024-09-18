@@ -1,4 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { getBalance, readContract,simulateContract,writeContract,waitForTransactionReceipt } from '@wagmi/core';
+import { config } from '../BlockChainContext/config';
+import { nonceManager, parseEther } from "viem";
+import {
+  abi,
+  contractAddress,
+  testTokenAddress,
+  erc20Abi
+} from '../BlockChainContext/helper';
+import { useAccount, useBalance } from 'wagmi';
+import { sepolia } from 'viem/chains';
 
 export default function UnlockGems() {
   const [open, setOpen] = useState(false);
@@ -33,6 +44,25 @@ export default function UnlockGems() {
 
    
     return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  };
+
+
+  const handleUnlockGem= async () => {
+    try {
+      console.log("hello")
+      const { request } = await simulateContract(config, {
+        abi: abi,
+        address: contractAddress,
+        functionName: 'withdrawFromLock',
+      });
+      const hash = await writeContract(config, request);
+      const transactionReceipt = await waitForTransactionReceipt(config, {
+        // confirmations: 2,
+        hash: hash,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
  
@@ -96,7 +126,7 @@ export default function UnlockGems() {
                   </div>
                 </div>
               )}
-              <span className={loading ? 'invisible' : ''}>
+              <span onClick={handleUnlockGem} className={loading ? 'invisible' : ''}>
                 UNLOCK
               </span>
             </button>
