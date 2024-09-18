@@ -4,7 +4,7 @@ export default function PurchaseProtection() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [remainingTime, setRemainingTime] = useState('');
-  const [customDate, setCustomDate] = useState(new Date('2024-09-18T00:00:00'));
+  const [customDate, setCustomDate] = useState(new Date('2024-09-19T00:00:00'));
   const [isTimeUp, setIsTimeUp] = useState(false);
 
   const handleOpen = () => {
@@ -18,7 +18,11 @@ export default function PurchaseProtection() {
   const handleClose = () => setOpen(false);
 
   const handleAddDay = () => {
-    setCustomDate((prevDate) => new Date(prevDate.getTime() + 24 * 60 * 60 * 1000));
+    setLoading(true);
+    setTimeout(() => {
+      setCustomDate((prevDate) => new Date(prevDate.getTime() + 24 * 60 * 60 * 1000));
+      setLoading(false);
+    }, 500); // Simulate loading time
   };
 
   const calculateRemainingTime = (targetDate) => {
@@ -53,11 +57,7 @@ export default function PurchaseProtection() {
         onClick={handleOpen}
         className="bg-[#8B0000] rounded-2xl py-2 sm:px-6 text-lg text-white w-full flex items-center justify-center"
       >
-      
         Purchase Protection
-
-        
-        
       </button>
 
       {/* Modal */}
@@ -77,16 +77,30 @@ export default function PurchaseProtection() {
             <p className="mt-4 text-black font-semibold">Remaining Time ⏱⏱</p>
             <p className="text-lg text-black font-bold">{remainingTime}</p>
 
-            {/* Add 1 Day button */}
+            {/* Add 1 Day button with loading spinner */}
             <button
+              className="mt-6 bg-red-500 text-white px-4 py-2 rounded relative w-full"
               onClick={handleAddDay}
-              className="mt-6 bg-red-500 text-white px-4 py-2 rounded w-full"
-              disabled={isTimeUp}
-              // style={{ filter: isTimeUp ? 'blur(3px)' : 'none' }}
-              style={{backgroundColor: isTimeUp ? 'gray' : 'red'}}
-
+              disabled={loading || isTimeUp}
+              style={{ backgroundColor: isTimeUp ? 'gray' : 'red' }}
             >
-              Add 1 Day
+              {loading && (
+                <div
+                  className="absolute inset-0 flex items-center justify-center"
+                  role="status"
+                >
+                  <div
+                    className="inline-block h-6 w-6 animate-spin rounded-full border-4 border-solid border-current border-e-transparent text-white"
+                  >
+                    <span className="!absolute !m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                      Loading...
+                    </span>
+                  </div>
+                </div>
+              )}
+              <span className={loading ? 'invisible' : ''}>
+                Add 1 Day
+              </span>
             </button>
           </div>
         </div>

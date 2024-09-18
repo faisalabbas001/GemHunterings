@@ -19,7 +19,7 @@ const Header = () => {
 
         <div className="mt-4 block lg:hidden">
           {isConnected ? (
-            <div className="bg-white text-black py-2 px-4 rounded-lg">
+            <div className="bg-white text-black py-2 px-4 rounded-lg" onClick={open}>
               {address.slice(0, 6)}...{address.slice(-4)}
             </div>
           ) : (
@@ -32,7 +32,7 @@ const Header = () => {
 
       <div className="fixed top-10 right-4 hidden lg:block cursor-pointer">
         {isConnected ? (
-          <div className="bg-white text-black py-1 px-4 rounded-2xl hover:bg-green-700">
+          <div className="bg-white text-black py-1 px-4 rounded-2xl hover:bg-green-700" onClick={open}>
             {address.slice(0, 6)}...{address.slice(-4)}
           </div>
         ) : (
