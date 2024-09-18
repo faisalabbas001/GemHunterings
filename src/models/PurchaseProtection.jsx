@@ -106,15 +106,31 @@ export default function PurchaseProtection() {
             <p className="mt-4 text-black font-semibold">Remaining Time ⏱⏱</p>
             <p className="text-lg text-black font-bold">{remainingTime}</p>
 
-            {/* Add 1 Day button */}
+            {/* Add 1 Day button with loading spinner */}
             <button
+              className="mt-6 bg-red-500 text-white px-4 py-2 rounded relative w-full"
               onClick={handleAddDay}
-              className="mt-6 bg-red-500 text-white px-4 py-2 rounded w-full"
               disabled={isTimeUp}
               // style={{ filter: isTimeUp ? 'blur(3px)' : 'none' }}
               style={{ backgroundColor: isTimeUp ? 'gray' : 'red' }}
             >
-              Add 1 Day
+              {loading && (
+                <div
+                  className="absolute inset-0 flex items-center justify-center"
+                  role="status"
+                >
+                  <div
+                    className="inline-block h-6 w-6 animate-spin rounded-full border-4 border-solid border-current border-e-transparent text-white"
+                  >
+                    <span className="!absolute !m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                      Loading...
+                    </span>
+                  </div>
+                </div>
+              )}
+              <span className={loading ? 'invisible' : ''}>
+                Add 1 Day
+              </span>
             </button>
           </div>
         </div>
