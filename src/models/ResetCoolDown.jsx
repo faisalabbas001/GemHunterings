@@ -25,12 +25,22 @@ export default function ResetCoolDown() {
   const [customDate, setCustomDate] = useState(new Date('2024-09-19T00:00:00'));
 
   const handleOpen = () => {
-    setLoading(true);  
-    setTimeout(() => {
-      setLoading(false);  
-      setOpen(true);      
-    }, 1000);
-  };
+    
+    
+    setOpen(true);      
+ 
+};
+
+const showloading=()=>{
+  setLoading(true);  
+  setTimeout(() => {
+    setLoading(false);  
+    location.reload();
+       
+  },500);
+  
+}
+
   
  
   const handleClose = () => setOpen(false);
@@ -140,7 +150,7 @@ export default function ResetCoolDown() {
         
 
             {/* Unlock button */}
-            <button className="mt-6 flex justify-center items-center  bg-red-500 text-white px-4 py-2 rounded w-full" disabled={loading} onClick={handleOpen}>
+            <button className="mt-6 flex justify-center items-center  bg-red-500 text-white px-4 py-2 rounded w-full" disabled={loading} onClick={showloading}>
              
 
 

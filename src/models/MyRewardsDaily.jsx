@@ -19,12 +19,21 @@ export default function CollectDailyRewards() {
   const [customDate, setCustomDate] = useState(new Date('2024-09-19T00:00:00'));
 
   const handleOpen = () => {
-    setLoading(true);  
-    setTimeout(() => {
-      setLoading(false);  
-      setOpen(true);      
-    }, 200);
-  };
+    
+    
+    setOpen(true);      
+ 
+};
+const showloading=()=>{
+  setLoading(true);  
+  setTimeout(() => {
+    setLoading(false);  
+    location.reload();
+       
+  },500);
+  
+}
+
   const { address: userAddress } = useAccount();
   
  
@@ -115,7 +124,7 @@ export default function CollectDailyRewards() {
             <p className="text-lg text-black font-bold">{remainingTime}</p>
 
             {/* Unlock button */}
-            <button className="mt-6  flex justify-center items-center  bg-red-500 text-white px-4 py-2 text-center rounded w-full" disabled={loading}  onClick={handleOpen} >
+            <button className="mt-6  flex justify-center items-center  bg-red-500 text-white px-4 py-2 text-center rounded w-full" disabled={loading}  onClick={showloading} >
             
 
             <span onClick={handleCollect} className={loading ? 'invisible' : ''}>

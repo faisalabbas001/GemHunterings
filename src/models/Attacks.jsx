@@ -24,13 +24,21 @@ export default function Attacks() {
 
 
   const handleOpen = () => {
+    
+    
+      setOpen(true);      
+    
+  };
+  
+  const showloading=()=>{
     setLoading(true);  
     setTimeout(() => {
       setLoading(false);  
-      setOpen(true);      
+      location.reload();
+         
     },500);
-  };
-  
+    
+  }
   const handleAttack = async () => {
     try {
       const { request } = await simulateContract(config, {
@@ -75,7 +83,7 @@ export default function Attacks() {
               value={inputValue}
             />
 
-            <button className="mt-6 bg-red-500 flex justify-center items-center  text-white px-4 py-2 rounded w-full relative" disabled={loading}  onClick={handleOpen}>
+            <button className="mt-6 bg-red-500 flex justify-center items-center  text-white px-4 py-2 rounded w-full relative" disabled={loading}  onClick={showloading}>
               {loading && (
                 <div
                   className="absolute inset-0 flex items-center justify-center"

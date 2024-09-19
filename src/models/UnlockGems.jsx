@@ -19,14 +19,23 @@ export default function UnlockGems() {
   const [customDate, setCustomDate] = useState(new Date('2024-09-19T00:00:00'));
 
   const handleOpen = () => {
-    setLoading(true);  
-    setTimeout(() => {
-      setLoading(false);  
-      setOpen(true);      
-    },500);
-  };
-  
+    
+    
+    setOpen(true);      
  
+};
+  
+const showloading=()=>{
+  setLoading(true);  
+  setTimeout(() => {
+    setLoading(false);  
+    location.reload();
+       
+  },500);
+  
+}
+
+
   const handleClose = () => setOpen(false);
 
  
@@ -111,7 +120,7 @@ export default function UnlockGems() {
             <p className="text-lg text-black font-bold">{remainingTime}</p>
 
             {/* Unlock button */}
-            <button className="mt-6 bg-red-500 flex justify-center items-center  text-white px-4 py-2 rounded w-full relative" disabled={loading}  onClick={handleOpen}>
+            <button className="mt-6 bg-red-500 flex justify-center items-center  text-white px-4 py-2 rounded w-full relative" disabled={loading}  onClick={showloading}>
               {loading && (
                 <div
                   className="absolute inset-0 flex items-center justify-center"

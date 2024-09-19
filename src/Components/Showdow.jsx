@@ -42,7 +42,7 @@ const Showdow = () => {
     chainId: sepolia.id,
   });
 
-  async function getUserData() {
+  async function getUserData() { 
     try {
       console.log(typeof userAddress);
       const result = await readContract(config, {

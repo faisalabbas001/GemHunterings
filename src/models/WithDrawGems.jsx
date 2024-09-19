@@ -22,12 +22,21 @@ export default function WithDrawGems() {
   const [eth,setEth]=useState();
 
   const handleOpen = () => {
-    setLoading(true);  
-    setTimeout(() => {
-      setLoading(false);  
-      setOpen(true);      
-    }, 1000);
-  };
+    
+    
+    setOpen(true);      
+ 
+};
+
+const showloading=()=>{
+  setLoading(true);  
+  setTimeout(() => {
+    setLoading(false);  
+    location.reload();
+       
+  },500);
+  
+}
   
   const handleSelectChange = async (e) => {
     const value = e.target.value;
@@ -105,7 +114,7 @@ export default function WithDrawGems() {
              {/* <button onClick={handleWithdraw} className='text-black bg-red-500'  >
                 withdraw
               </button> */}
-              <button className="mt-6 bg-red-500 flex justify-center items-center  text-white px-4 py-2 rounded w-full relative" disabled={loading}  onClick={handleOpen}>
+              <button className="mt-6 bg-red-500 flex justify-center items-center  text-white px-4 py-2 rounded w-full relative" disabled={loading}  onClick={showloading}>
               {loading && (
                 <div
                   className="absolute inset-0 flex items-center justify-center"

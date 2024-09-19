@@ -25,12 +25,19 @@ export default function PurchaseProtection() {
   const [isTimeUp, setIsTimeUp] = useState(false);
 
   const handleOpen = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setOpen(true);
-    }, 500);
-  };
+    
+    
+    setOpen(true);      
+ 
+};
+const showloading=()=>{
+  setLoading(true);  
+  setTimeout(() => {
+    setLoading(false);  
+    location.reload();
+  },500);
+  
+}
 
   const handleClose = () => setOpen(false);
 
@@ -112,7 +119,7 @@ export default function PurchaseProtection() {
             <button  
   className="mt-6 bg-red-500 flex justify-center items-center text-white px-4 py-2 rounded w-full relative"  
   disabled={loading || isTimeUp}  
-  onClick={handleOpen}  
+  onClick={showloading}  
   style={{ backgroundColor: isTimeUp ? 'gray' : 'red' }}  
 >
               {loading && (
