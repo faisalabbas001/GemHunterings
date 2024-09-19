@@ -35,12 +35,9 @@ const Header = () => {
       {/* Desktop View (Hidden on smaller screens) */}
       <div className="fixed top-10 right-4 hidden lg:block cursor-pointer">
         {isConnected ? (
-          <button
-            className="bg-white text-black text-[14px] sm:text-[16px] px-2 sm:px-4 py-[6px] transform scale-90 sm:scale-100 border border-white border-opacity-50 rounded-2xl hover:bg-green-700"
-            onClick={() => open()}
-          >
-            {address.slice(0, 4)}...{address.slice(-4)}
-          </button>
+          <div className="bg-white text-black py-1 px-4 rounded-2xl hover:bg-green-700" onClick={open}>
+            {address.slice(0, 6)}...{address.slice(-4)}
+          </div>
         ) : (
           <button
             onClick={() => open()}

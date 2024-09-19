@@ -132,7 +132,8 @@ export default function PurchaseProtection() {
               <span  onClick={handleAddDay} className={loading ? 'invisible' : ''} >
               Add 1 Day
               </span>
-            </button>
+            {/* Add 1 Day button with loading spinner */}
+           </button>
           </div>
         </div>
       )}
