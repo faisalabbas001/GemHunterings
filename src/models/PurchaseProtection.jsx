@@ -21,7 +21,7 @@ export default function PurchaseProtection() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [remainingTime, setRemainingTime] = useState('');
-  const [customDate, setCustomDate] = useState(new Date('2024-09-19T00:00:00'));
+  const [customDate, setCustomDate] = useState(new Date('2024-09-21T00:00:00'));
   const [isTimeUp, setIsTimeUp] = useState(false);
 
   const handleOpen = () => {
@@ -107,14 +107,31 @@ export default function PurchaseProtection() {
             <p className="text-lg text-black font-bold">{remainingTime}</p>
 
             {/* Add 1 Day button */}
-            <button
-              onClick={handleAddDay}
-              className="mt-6 bg-red-500 text-white px-4 py-2 rounded w-full"
-              disabled={isTimeUp}
-              // style={{ filter: isTimeUp ? 'blur(3px)' : 'none' }}
-              style={{ backgroundColor: isTimeUp ? 'gray' : 'red' }}
-            >
+           
+
+            <button  
+  className="mt-6 bg-red-500 flex justify-center items-center text-white px-4 py-2 rounded w-full relative"  
+  disabled={loading || isTimeUp}  
+  onClick={handleOpen}  
+  style={{ backgroundColor: isTimeUp ? 'gray' : 'red' }}  
+>
+              {loading && (
+                <div
+                  className="absolute inset-0 flex items-center justify-center"
+                  role="status"
+                >
+                  <div
+                    className="inline-block h-6 w-6 animate-spin rounded-full border-4 border-solid border-current border-e-transparent text-white"
+                  >
+                    <span className="!absolute !m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                      Loading...
+                    </span>
+                  </div>
+                </div>
+              )}
+              <span  onClick={handleAddDay} className={loading ? 'invisible' : ''} >
               Add 1 Day
+              </span>
             </button>
           </div>
         </div>

@@ -102,9 +102,29 @@ export default function WithDrawGems() {
               <option value="TKir">TKir</option>
             </select>
              <p className="text-lg text-black font-bold">20% will be deducted in the case of ETH</p>
-             <button onClick={handleWithdraw} className='text-black bg-red-500'  >
+             {/* <button onClick={handleWithdraw} className='text-black bg-red-500'  >
                 withdraw
-              </button>
+              </button> */}
+              <button className="mt-6 bg-red-500 flex justify-center items-center  text-white px-4 py-2 rounded w-full relative" disabled={loading}  onClick={handleOpen}>
+              {loading && (
+                <div
+                  className="absolute inset-0 flex items-center justify-center"
+                  role="status"
+                >
+                  <div
+                    className="inline-block h-6 w-6 animate-spin rounded-full border-4 border-solid border-current border-e-transparent text-white"
+                  >
+                    <span className="!absolute !m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                      Loading...
+                    </span>
+                  </div>
+                </div>
+              )}
+              <span onClick={handleWithdraw} className={loading ? 'invisible' : ''}>
+              withdraw
+              </span>
+            </button>
+
           </div>
         </div>
       )}

@@ -145,7 +145,7 @@ export default function ResetCoolDown() {
 
 
               <span onClick={handleReset} className={loading ? 'invisible' : ''}>
-              Resett
+              Reset
         </span>
 
         {loading && (
