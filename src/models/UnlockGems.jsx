@@ -42,7 +42,10 @@ export default function UnlockGems({ contractTime }) {
       });
       const hash = await writeContract(config, request);
       toast.info(`Transaction sent! Hash: ${hash}`);
-      await waitForTransactionReceipt(config, { hash });
+      const transactionReceipt = await waitForTransactionReceipt(config, {
+        // confirmations: 2,
+        hash: hash,
+      });
       toast.success('Gems successfully unlocked!');
     } catch (error) {
       console.error(error);
