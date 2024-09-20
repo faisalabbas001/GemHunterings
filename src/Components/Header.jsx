@@ -11,7 +11,7 @@ const Header = () => {
         <div className="mt-4">
           <h6 className="text-lg text-white font-posey">THE ETH REWARD POOL WITH THE</h6>
           <h6 className="text-lg text-white font-posey">BEST DAILY REWARDS!</h6>
-          <h6 className="text-lg text-white font-posey mt-2">8% VARIABLE RETURNS DAILY</h6>
+          <h6 className="text-lg text-white font-posey mt-2">8% VARIABLE RETURNS DAILY</h6> 
         </div>
         {/* Mobile View (Hidden on larger screens) */}
         <div className="mt-4 block lg:hidden">

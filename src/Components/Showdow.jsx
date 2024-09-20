@@ -13,10 +13,11 @@ import {
   abi,
   contractAddress,
   testTokenAddress,
-  erc20Abi
+  erc20Abi,
 } from '../BlockChainContext/helper';
 import { useAccount, useBalance } from 'wagmi';
 import { sepolia } from 'viem/chains';
+import { formatEther } from 'ethers';
 
 const Showdow = () => {
   const { address: userAddress } = useAccount();
@@ -41,9 +42,11 @@ const Showdow = () => {
     token: testTokenAddress, // If you're querying a token balance
     chainId: sepolia.id,
   });
+  console.log(balanceData);
 
-  async function getUserData() { 
+  async function getUserData() {
     try {
+      console.log(balanceData);
       console.log(typeof userAddress);
       const result = await readContract(config, {
         abi,
@@ -54,9 +57,9 @@ const Showdow = () => {
       console.log(result);
       console.log(Number(result.gemBalanceAmount));
       setGemBalance(Number(result.gemBalanceAmount));
-      setTotalStacke(Number(result.stakedTokensAmount));
+      setTotalStacke(formatEther(result.stakedTokensAmount));
       setConversionLock(result.conversionLock); // Assuming conversionLock is part of the result
-      setGemBalanceAmount(Number(result.gemBalanceAmount)); // Assuming gemBalanceAmount is part of the result
+      setGemBalance(formatEther(result.gemBalanceAmount)); // Assuming gemBalanceAmount is part of the result
       setNoOfCompoundsAmount(Number(result.noOfCompoundsAmount)); // Assuming noOfCompoundsAmount is part of the result
       setProtectionEndTimeAmount(Number(result.protectionEndTimeAmount)); // Assuming protectionEndTimeAmount is part of the result
       setStakedTokensAmount(Number(result.stakedTokensAmount)); // Assuming stakedTokensAmount is part of the result
@@ -128,6 +131,7 @@ getUserData()
         // confirmations: 2,
         hash: hash,
       });
+
       console.log("token Aapproved");
       toast.success("Token Approved");
     } catch (error) {
@@ -150,6 +154,7 @@ getUserData()
         // confirmations: 2,
         hash: hash,
       });
+
     } catch (error) {
       console.log(error);
     }
@@ -172,6 +177,7 @@ getUserData()
     }
   };
   
+   
 
   // Function to clear input value
   const clearInput = () => {

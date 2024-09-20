@@ -16,7 +16,7 @@ export default function UnlockGems() {
   const [loading, setLoading] = useState(false);
 
   const [remainingTime, setRemainingTime] = useState('');
-  const [customDate, setCustomDate] = useState(new Date('2024-09-19T00:00:00'));
+  const [customDate, setCustomDate] = useState(new Date('2024-09-22T00:00:00'));
 
   const handleOpen = () => {
     
@@ -24,7 +24,7 @@ export default function UnlockGems() {
     setOpen(true);      
  
 };
-  
+
 const showloading=()=>{
   setLoading(true);  
   setTimeout(() => {
@@ -34,8 +34,7 @@ const showloading=()=>{
   },500);
   
 }
-
-
+ 
   const handleClose = () => setOpen(false);
 
  
@@ -111,7 +110,7 @@ const showloading=()=>{
               onClick={handleClose}
               className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
             >
-              ✖️
+              ✖
             </button>
 
             {/* Modal content */}
