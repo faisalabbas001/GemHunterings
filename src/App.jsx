@@ -4,7 +4,8 @@ import Header from './Components/Header';
 import Showdow from './Components/Showdow';
 import Footer from './Components/Footer';
 import Loader from './Loader';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -22,6 +23,7 @@ function App() {
       <Loader loading={loading} /> 
       {!loading && (
         <>
+        <ToastContainer />
           <Header />
           <Showdow />
           <Footer />

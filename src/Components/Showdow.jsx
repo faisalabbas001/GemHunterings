@@ -54,11 +54,11 @@ const Showdow = () => {
         functionName: 'getUserData',
         args: [userAddress],
       });
-      console.log(result);
+      console.log("Results",result);
       console.log(Number(result.gemBalanceAmount));
       setGemBalance(Number(result.gemBalanceAmount));
       setTotalStacke(formatEther(result.stakedTokensAmount));
-      setConversionLock(result.conversionLock); // Assuming conversionLock is part of the result
+      setConversionLock(result?.conversionLock); // Assuming conversionLock is part of the result
       setGemBalance(formatEther(result.gemBalanceAmount)); // Assuming gemBalanceAmount is part of the result
       setNoOfCompoundsAmount(Number(result.noOfCompoundsAmount)); // Assuming noOfCompoundsAmount is part of the result
       setProtectionEndTimeAmount(Number(result.protectionEndTimeAmount)); // Assuming protectionEndTimeAmount is part of the result
@@ -92,7 +92,7 @@ const Showdow = () => {
     stealStreakAmount,
   );
 
-
+console.log("gameBalance is that here",)
 
 useEffect(async ()=>{
 getUserData()
@@ -264,8 +264,7 @@ getUserData()
 
         {/* Unlock/Unstack Buttons */}
         <div className="flex flex-col flex-wrap  sm:flex-row justify-between mt-7 space-y-4 sm:space-y-0 sm:space-x-4">
-          <UnlockGems />
-
+        <UnlockGems contractTime={Number(conversionLock?.time) || 0} />
           <CollectDailyRewards />
         </div>
 

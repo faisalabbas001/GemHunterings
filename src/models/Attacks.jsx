@@ -34,7 +34,7 @@ export default function Attacks() {
     setLoading(true);  
     setTimeout(() => {
       setLoading(false);  
-      location.reload();
+      
          
     },500);
     

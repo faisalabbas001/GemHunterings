@@ -35,7 +35,7 @@ const showloading=()=>{
   setLoading(true);  
   setTimeout(() => {
     setLoading(false);  
-    location.reload();
+    
        
   },500);
   
