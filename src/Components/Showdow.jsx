@@ -33,6 +33,8 @@ const Showdow = () => {
   const [stakedTokensAmount, setStakedTokensAmount] = useState(0);
   const [stealCooldownAmount, setStealCooldownAmount] = useState(0);
   const [stealStreakAmount, setStealStreakAmount] = useState(0);
+  const [OneMinuteTimer, setOneMinuteTimer] = useState(0);
+  const [ShowUpdatedData, setShowUpdatedData] = useState(false);
   const {
     data: balanceData,
     isError,
@@ -55,9 +57,11 @@ const Showdow = () => {
         args: [userAddress],
       });
       console.log("Results",result);
+      setShowUpdatedData(true);
       console.log(Number(result.gemBalanceAmount));
       setGemBalance(Number(result.gemBalanceAmount));
       setTotalStacke(formatEther(result.stakedTokensAmount));
+      setOneMinuteTimer(Number(result?.conversionLock?.time)+10);
       setConversionLock(result?.conversionLock); // Assuming conversionLock is part of the result
       setGemBalance(formatEther(result.gemBalanceAmount)); // Assuming gemBalanceAmount is part of the result
       setNoOfCompoundsAmount(Number(result.noOfCompoundsAmount)); // Assuming noOfCompoundsAmount is part of the result
@@ -65,7 +69,8 @@ const Showdow = () => {
       setStakedTokensAmount(Number(result.stakedTokensAmount)); // Assuming stakedTokensAmount is part of the result
       setStealCooldownAmount(Number(result.stealCooldownAmount)); // Assuming stealCooldownAmount is part of the result
       setStealStreakAmount(Number(result.stealStreakAmount)); // Assuming stealStreakAmount is part of the result
-    // console.log(
+          
+       // console.log(
     //   gemBalance,
     //   totalStacked,
     //   conversionLock,
@@ -94,11 +99,9 @@ const Showdow = () => {
 
 console.log("gameBalance is that here",)
 
-useEffect(async ()=>{
+useEffect( ()=>{
 getUserData()
-
-
-},[])
+},[gemBalance, totalStacked, conversionLock, noOfCompoundsAmount, protectionEndTimeAmount, stakedTokensAmount, stealCooldownAmount, stealStreakAmount])
 
 
   // async function getBalance2() {
@@ -264,19 +267,19 @@ getUserData()
 
         {/* Unlock/Unstack Buttons */}
         <div className="flex flex-col flex-wrap  sm:flex-row justify-between mt-7 space-y-4 sm:space-y-0 sm:space-x-4">
-        <UnlockGems contractTime={Number(conversionLock?.time) || 0} />
-          <CollectDailyRewards />
+        <UnlockGems contractTime={Number(conversionLock?.time) || 0}  />
+          <CollectDailyRewards contractTime={Number(conversionLock?.time) || 0}  />
         </div>
 
         {/* Withdraw/Purchase Protection Buttons */}
         <div className="flex flex-col sm:flex-row justify-between mt-7 space-y-4 sm:space-y-0 sm:space-x-4">
           <WithDrawGems />
-          <PurchaseProtection />
+          <PurchaseProtection contractTime={Number(conversionLock?.time) || 0} />
         </div>
 
         {/* Reset/Attack Buttons */}
         <div className="flex flex-col  sm:flex-row justify-between mt-7 space-y-4 sm:space-y-0 sm:space-x-4">
-          <ResetCoolDown />
+          <ResetCoolDown contractTime={Number(conversionLock?.time) || 0}  />
           <Attacks />
         </div>
       </div>

@@ -12,7 +12,7 @@ import {
 } from '../BlockChainContext/helper';
 import { useAccount, useBalance } from 'wagmi';
 import { sepolia } from 'viem/chains';
-
+import { toast } from 'react-toastify';
 export default function WithDrawGems() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -66,9 +66,12 @@ const showloading=()=>{
         // confirmations: 2,
         hash: hash,
       });
+      toast.success(' WithDrawGems  Successfully !');
     } catch (error) {
       console.log(error);
+      toast.error('Failed to WithDrawGems . Please try again.');
     }
+
   }
   const handleClose = () => setOpen(false);
  

@@ -1,71 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-  getBalance,
   readContract,
   simulateContract,
   writeContract,
   waitForTransactionReceipt,
 } from '@wagmi/core';
 import { config } from '../BlockChainContext/config';
-import { nonceManager, parseEther } from 'viem';
-import {
-  abi,
-  contractAddress,
-  testTokenAddress,
-  erc20Abi,
-} from '../BlockChainContext/helper';
-import { useAccount, useBalance } from 'wagmi';
-import { sepolia } from 'viem/chains';
-
-export default function ResetCoolDown() {
+import { abi, contractAddress } from '../BlockChainContext/helper';
+import Countdown from 'react-countdown';
+import { toast } from 'react-toastify';
+export default function ResetCoolDown({ contractTime, OneMinuteTimer }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isTimeUp, setIsTimeUp] = useState(false); // Tracks if the countdown is complete
 
-  const [remainingTime, setRemainingTime] = useState('');
-  const [customDate, setCustomDate] = useState(new Date('2024-09-19T00:00:00'));
-
-  const handleOpen = () => {
-    
-    
-    setOpen(true);      
- 
-};
-
-const showloading=()=>{
-  setLoading(true);  
-  setTimeout(() => {
-    setLoading(false);  
-    
-       
-  },500);
-  
-}
-
-  
- 
+  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
- 
-  const calculateRemainingTime = (targetDate) => {
-    const now = new Date();
-    const timeRemaining = targetDate - now; 
-
-   
-    if (timeRemaining <= 0) return 'Time is up!';
-
-    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeRemaining / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((timeRemaining / (1000 * 60)) % 60);
-    const seconds = Math.floor((timeRemaining / 1000) % 60);
-
-   
-    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  const showLoading = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
   };
-  const handleReset=async ()=>{
 
-    console.log("reset");
-        try {
-      console.log(eth);
+  // Countdown completion handler
+  const handleCountdownComplete = () => {
+    setIsTimeUp(true); // Set isTimeUp to true when countdown is complete
+  };
+
+  const handleReset = async () => {
+    console.log('Resetting cooldown...');
+    try {
       const result = await readContract(config, {
         abi,
         address: contractAddress,
@@ -75,44 +41,49 @@ const showloading=()=>{
 
       let noOfEth;
       if (result.data < 0.5) {
-        noOfEth=0.01;
+        noOfEth = 0.01;
       } else if (result.data >= 0.5 && result.data < 1) {
-        noOfEth=0.02;
+        noOfEth = 0.02;
       } else if (result.data >= 1) {
-        noOfEth=0.03;
+        noOfEth = 0.03;
       }
+
       try {
         const { request } = await simulateContract(config, {
-          abi: abi,
+          abi,
           address: contractAddress,
           functionName: 'purchaseProtection',
-          value: parseEther(noOfEth)
+          value: parseEther(noOfEth),
         });
         const hash = await writeContract(config, request);
         const transactionReceipt = await waitForTransactionReceipt(config, {
-          // confirmations: 2,
           hash: hash,
         });
+        console.log('Protection purchased successfully!', transactionReceipt);
+        toast.success('Protection purchased successfully!');
       } catch (error) {
-        console.log(error);
+        console.error('Error writing contract:', error);
       }
     } catch (error) {
-      console.log(error);
+      console.error('Error reading contract:', error);
+      toast.error('Error reading contract.');
     }
-  }
+  };
 
- 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setRemainingTime(calculateRemainingTime(customDate));
-    }, 1000);
+  const Completionist = () => <span>Cooldown Ended</span>;
 
-  
-
-  
-    return () => clearInterval(timer);
-  }, [customDate]);
-
+  // Countdown renderer
+  const renderer = ({ hours, minutes, seconds, completed }) => {
+    if (completed) {
+      return <Completionist />;
+    } else {
+      return isTimeUp ? (
+        <span>Cooldown is ready to be reset</span>
+      ) : (
+        <span>{hours}:{minutes}:{seconds}</span>
+      );
+    }
+  };
 
   return (
     <div className="text-center">
@@ -120,16 +91,10 @@ const showloading=()=>{
       <button
         onClick={handleOpen}
         className="bg-[#8B0000] rounded-2xl py-2 px-12 text-lg text-white w-full flex items-center justify-center"
-        disabled={loading}  
-        style={{ minWidth: '160px' }} 
+        disabled={loading}
+        style={{ minWidth: '160px' }}
       >
-        {/* Button Text (invisible when loading) */}
-       
-        Reset-coolDown
-       
-
-        {/* Conditionally render the loader when loading */}
-       
+        Reset CoolDown
       </button>
 
       {/* Modal */}
@@ -145,31 +110,36 @@ const showloading=()=>{
             </button>
 
             {/* Modal content */}
-            <h3 className="text-xl text-black">Will Reset After 00:00</h3>
-            <p className="mt-4 text-black font-semibold">{remainingTime}</p>
-        
+            <h3 className="text-xl text-black">Remaining Time</h3>
+            <p className="mt-4 text-black font-semibold">Time Remaining ⏱</p>
+            <p className="text-lg text-black font-bold">
+              <Countdown
+               date={Math.floor(Date.now()/1000) - contractTime}
+                renderer={renderer}
+                onComplete={handleCountdownComplete}
+              />
+            </p>
 
-            {/* Unlock button */}
-            <button className="mt-6 flex justify-center items-center  bg-red-500 text-white px-4 py-2 rounded w-full" disabled={loading} onClick={showloading}>
-             
-
-
+            {/* Reset button */}
+            <button
+              className="mt-6 flex justify-center items-center bg-red-500 text-white px-4 py-2 rounded w-full"
+              disabled={!isTimeUp || loading} // Disabled until time is up or loading
+              onClick={showLoading}
+              style={{ backgroundColor: isTimeUp ? 'red' : 'gray' }}
+            >
+              {loading && (
+                <div
+                  className="absolute inline-block h-6 w-6 file animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-white"
+                  role="status"
+                >
+                  <span className="!absolute !m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                    Loading...
+                  </span>
+                </div>
+              )}
               <span onClick={handleReset} className={loading ? 'invisible' : ''}>
-              Reset
-        </span>
-
-        {loading && (
-          <div
-            className="absolute inline-block h-6 w-6 file animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-white"
-            role="status"
-          >
-            <span className="!absolute !m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-              Loading...
-            </span>
-          </div>
-        )}
-
-
+                {isTimeUp ? 'Reset' : 'Cannot Reset Yet'}
+              </span>
             </button>
           </div>
         </div>

@@ -3,34 +3,21 @@ import { toast } from 'react-toastify';
 import { simulateContract, writeContract, waitForTransactionReceipt } from '@wagmi/core';
 import { config } from '../BlockChainContext/config';
 import { abi, contractAddress } from '../BlockChainContext/helper';
-
 import Countdown from 'react-countdown';
+
 export default function UnlockGems({ contractTime }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(contractTime);
-  const [isTimeUp, setIsTimeUp] = useState(false);
+  // const [remainingTime, setRemainingTime] = useState(contractTime);
+  const [isTimeUp, setIsTimeUp] = useState(false); // State to track if time is up
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // Function to format the remaining time into days, hours, minutes, and seconds
- 
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRemainingTime((prevTime) => {
-        if (prevTime <= 1) {
-          clearInterval(interval);
-          setIsTimeUp(true);
-          return 0; // Ensure remaining time doesn't go below 0
-        }
-        return prevTime - 1; // Decrement the remaining time by 1 second
-      });
-    }, 1000); // Update every second
-
-    return () => clearInterval(interval); // Clean up the interval when the component unmounts
-  }, []); // Empty dependency array to run only once on mount
+  // Countdown completion handler
+  const handleCountdownComplete = () => {
+    setIsTimeUp(true); // Set time up to true when countdown is complete
+  };
 
   const handleUnlockGem = async () => {
     setLoading(true);
@@ -43,7 +30,6 @@ export default function UnlockGems({ contractTime }) {
       const hash = await writeContract(config, request);
       toast.info(`Transaction sent! Hash: ${hash}`);
       const transactionReceipt = await waitForTransactionReceipt(config, {
-        // confirmations: 2,
         hash: hash,
       });
       toast.success('Gems successfully unlocked!');
@@ -55,19 +41,25 @@ export default function UnlockGems({ contractTime }) {
     }
   };
 
-
   const Completionist = () => <span>Time Ended</span>;
 
-// Renderer callback with condition
-const renderer = ({ hours, minutes, seconds, completed }) => {
-  if (completed) {
-    // Render a completed state
-    return <Completionist />;
-  } else {
-    // Render a countdown
-    return <span>{hours}:{minutes}:{seconds}</span>;
-  }
-};
+  // Countdown renderer callback with condition
+  const renderer = ({ hours, minutes, seconds, completed }) => {
+    if (completed) {
+      // Render a completed state
+      return <Completionist />;
+    } else {
+      // Render a countdown
+      return isTimeUp ? <span>Time to unlock the jems </span> : <span>{hours}:{minutes}:{seconds}</span>;
+    }
+  };
+
+  console.log(
+    'contractTime',
+    contractTime,
+    `Math.floor(Date.now()/1000) - Number(contractTime)`,
+    Math.floor(Date.now() / 1000) - Number(contractTime)
+  );
 
   return (
     <div className="text-center">
@@ -91,18 +83,23 @@ const renderer = ({ hours, minutes, seconds, completed }) => {
 
             <h3 className="text-xl text-black">Gem Unlock</h3>
             <p className="mt-4 text-black font-semibold">Remaining Time ⏱</p>
-            <p className="text-lg text-black font-bold">{<Countdown
-    date={Date.now() + 1726824660}
-    renderer={renderer}
-  />}</p>
+            <p id="getinnertext" className="text-lg text-black font-bold">
+              {
+                <Countdown
+              date={Math.floor(Date.now()/1000) - contractTime}
+                  renderer={renderer}
+                  onComplete={handleCountdownComplete} // Trigger action on countdown complete
+                />
+              }
+            </p>
 
             <button
               className="mt-6 bg-red-500 flex justify-center items-center text-white px-4 py-2 rounded w-full relative"
-              disabled={!isTimeUp || loading}
+              disabled={!isTimeUp || loading} // Disable button if time is not up or loading
               onClick={handleUnlockGem}
             >
               {loading && <span>Loading...</span>}
-              <span>{isTimeUp ? 'UNLOCK' : 'Cannot Unlock Yet'}</span>
+              <span>{isTimeUp ? 'UNLOCK' : 'Cannot Unlock Yet'}</span> {/* Button text changes based on time */}
             </button>
           </div>
         </div>

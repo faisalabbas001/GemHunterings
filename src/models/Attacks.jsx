@@ -16,6 +16,7 @@ import {
 } from '../BlockChainContext/helper';
 import { useAccount, useBalance } from 'wagmi';
 import { sepolia } from 'viem/chains';
+import { toast } from 'react-toastify';
 export default function Attacks() {
   const [open, setOpen] = useState(false);
   const [inputValue, SetInputValue] = useState('');
@@ -52,8 +53,10 @@ export default function Attacks() {
         // confirmations: 2,
         hash: hash,
       });
+      toast.success(' Attacked   Successfully !');
     } catch (error) {
       console.log(error);
+      toast.error('Failed to Attacked  . Please try again.');
     }
   };
 
