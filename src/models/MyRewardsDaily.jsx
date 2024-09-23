@@ -10,7 +10,7 @@ import { useAccount } from 'wagmi';
 import { toast } from 'react-toastify';
 import Countdown from 'react-countdown';
 
-export default function CollectDailyRewards({ contractTime }) {
+export default function CollectDailyRewards({ contractTime,OneMinuteTimer }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false); // Track if the countdown is complete
@@ -96,7 +96,7 @@ export default function CollectDailyRewards({ contractTime }) {
             <p className="mt-4 text-black font-semibold">Remaining Time ⏱</p>
             <p className="text-lg text-black font-bold">
               <Countdown
-               date={Math.floor(Date.now()/1000) - contractTime}
+               date={Date.now() + Math.floor(OneMinuteTimer - contractTime) * 1000}
                 renderer={renderer}
                 onComplete={handleCountdownComplete}
               />

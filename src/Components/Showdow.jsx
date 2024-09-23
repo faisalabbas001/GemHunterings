@@ -61,7 +61,41 @@ const Showdow = () => {
       console.log(Number(result.gemBalanceAmount));
       setGemBalance(Number(result.gemBalanceAmount));
       setTotalStacke(formatEther(result.stakedTokensAmount));
-      setOneMinuteTimer(Number(result?.conversionLock?.time)+10);
+      setOneMinuteTimer(() => {
+        const currentTimestamp = Date.now(); // Current time in milliseconds
+        const storedExpiry = localStorage.getItem('conversionLockExpiry'); // Get stored expiry timestamp
+        
+        console.log('Current Timestamp:', currentTimestamp);
+        console.log('Stored Expiry:', storedExpiry);
+      
+        // Check if the expiry time is set and if the current time is less than the stored expiry time
+        if (storedExpiry && currentTimestamp < storedExpiry) {
+          // Timer has not expired yet, calculate remaining time
+          const remainingTime = Math.floor((storedExpiry - currentTimestamp) / 1000);
+          console.log('Remaining Time:', remainingTime);
+          
+          // Return remaining seconds if more than 0, otherwise return 0
+          return remainingTime > 0 ? remainingTime : 0;
+        } else {
+          // Timer expired or no expiry set, remove it from localStorage if expired
+          if (storedExpiry && currentTimestamp >= storedExpiry) {
+            console.log('Timer expired, clearing stored expiry.');
+            localStorage.removeItem('conversionLockExpiry'); // Clear stored expiry
+            return 0; // Do not restart the timer
+          }
+      
+          // This block ensures the timer is set only once (the first time)
+          if (!storedExpiry) {
+            console.log('No expiry set, setting a new expiry...');
+            const newExpiry = currentTimestamp + 60 * 1000; // Set new expiry to 60 seconds from now
+            localStorage.setItem('conversionLockExpiry', newExpiry);
+            return 60; // Start the timer at 60 seconds
+          }
+      
+          return 0; // Default to 0 if the timer has expired
+        }
+      });
+      
       setConversionLock(result?.conversionLock); // Assuming conversionLock is part of the result
       setGemBalance(formatEther(result.gemBalanceAmount)); // Assuming gemBalanceAmount is part of the result
       setNoOfCompoundsAmount(Number(result.noOfCompoundsAmount)); // Assuming noOfCompoundsAmount is part of the result
@@ -81,6 +115,8 @@ const Showdow = () => {
     //   stealCooldownAmount,
     //   stealStreakAmount,
     // );
+
+    
     } catch (error) {
       console.log(error);
     }
@@ -97,11 +133,15 @@ const Showdow = () => {
     stealStreakAmount,
   );
 
-console.log("gameBalance is that here",)
+
+
+useEffect(()=>{
+
+},[[gemBalance, totalStacked, conversionLock, noOfCompoundsAmount, protectionEndTimeAmount, stakedTokensAmount, stealCooldownAmount, stealStreakAmount]])
 
 useEffect( ()=>{
 getUserData()
-},[gemBalance, totalStacked, conversionLock, noOfCompoundsAmount, protectionEndTimeAmount, stakedTokensAmount, stealCooldownAmount, stealStreakAmount])
+},[])
 
 
   // async function getBalance2() {
@@ -267,19 +307,19 @@ getUserData()
 
         {/* Unlock/Unstack Buttons */}
         <div className="flex flex-col flex-wrap  sm:flex-row justify-between mt-7 space-y-4 sm:space-y-0 sm:space-x-4">
-        <UnlockGems contractTime={Number(conversionLock?.time) || 0}  />
-          <CollectDailyRewards contractTime={Number(conversionLock?.time) || 0}  />
+        <UnlockGems contractTime={Number(conversionLock?.time) || 0} OneMinuteTimer={OneMinuteTimer}  />
+          <CollectDailyRewards contractTime={Number(conversionLock?.time) || 0} OneMinuteTimer={OneMinuteTimer} />
         </div>
 
         {/* Withdraw/Purchase Protection Buttons */}
         <div className="flex flex-col sm:flex-row justify-between mt-7 space-y-4 sm:space-y-0 sm:space-x-4">
           <WithDrawGems />
-          <PurchaseProtection contractTime={Number(conversionLock?.time) || 0} />
+          <PurchaseProtection ProtectionTime={Number(protectionEndTimeAmount) || 0} OneMinuteTimer={OneMinuteTimer} />
         </div>
 
         {/* Reset/Attack Buttons */}
         <div className="flex flex-col  sm:flex-row justify-between mt-7 space-y-4 sm:space-y-0 sm:space-x-4">
-          <ResetCoolDown contractTime={Number(conversionLock?.time) || 0}  />
+          <ResetCoolDown CoolDownTime={Number( stealCooldownAmount) || 0} OneMinuteTimer={OneMinuteTimer} />
           <Attacks />
         </div>
       </div>

@@ -5,7 +5,7 @@ import { config } from '../BlockChainContext/config';
 import { abi, contractAddress } from '../BlockChainContext/helper';
 import Countdown from 'react-countdown';
 
-export default function PurchaseProtection({ contractTime }) {
+export default function PurchaseProtection({ ProtectionTime,OneMinuteTimer }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false); // State to track if time is up
@@ -74,8 +74,9 @@ export default function PurchaseProtection({ contractTime }) {
             <p className="mt-4 text-black font-semibold">Remaining Time ⏱⏱</p>
             <p className="text-lg text-black font-bold">
               <Countdown
-               date={Math.floor(Date.now()/1000) - contractTime}
-                renderer={renderer}
+              date={Date.now() + Math.floor(OneMinuteTimer - ProtectionTime) * 1000}
+              renderer={renderer}
+              
                 onComplete={handleCountdownComplete}
               />
             </p>

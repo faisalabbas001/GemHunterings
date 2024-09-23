@@ -5,7 +5,7 @@ import { config } from '../BlockChainContext/config';
 import { abi, contractAddress } from '../BlockChainContext/helper';
 import Countdown from 'react-countdown';
 
-export default function UnlockGems({ contractTime }) {
+export default function UnlockGems({ contractTime,OneMinuteTimer  }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   // const [remainingTime, setRemainingTime] = useState(contractTime);
@@ -86,7 +86,7 @@ export default function UnlockGems({ contractTime }) {
             <p id="getinnertext" className="text-lg text-black font-bold">
               {
                 <Countdown
-              date={Math.floor(Date.now()/1000) - contractTime}
+              date={Date.now() + Math.floor(OneMinuteTimer - contractTime) * 1000}
                   renderer={renderer}
                   onComplete={handleCountdownComplete} // Trigger action on countdown complete
                 />

@@ -9,7 +9,7 @@ import { config } from '../BlockChainContext/config';
 import { abi, contractAddress } from '../BlockChainContext/helper';
 import Countdown from 'react-countdown';
 import { toast } from 'react-toastify';
-export default function ResetCoolDown({ contractTime, OneMinuteTimer }) {
+export default function ResetCoolDown({ CoolDownTime, OneMinuteTimer }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false); // Tracks if the countdown is complete
@@ -114,7 +114,7 @@ export default function ResetCoolDown({ contractTime, OneMinuteTimer }) {
             <p className="mt-4 text-black font-semibold">Time Remaining ⏱</p>
             <p className="text-lg text-black font-bold">
               <Countdown
-               date={Math.floor(Date.now()/1000) - contractTime}
+               date={Date.now() + Math.floor(OneMinuteTimer - CoolDownTime) * 1000}
                 renderer={renderer}
                 onComplete={handleCountdownComplete}
               />
