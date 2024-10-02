@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { simulateContract, writeContract, waitForTransactionReceipt } from '@wagmi/core';
 import { config } from '../BlockChainContext/config';
 import { abi, contractAddress } from '../BlockChainContext/helper';
 import Countdown from 'react-countdown';
+import { AppContext } from '../context/AppContext';
 
-export default function UnlockGems({ contractTime,OneMinuteTimer  }) {
+export default function UnlockGems() {
+  const { contractTime, OneMinuteTimer } = useContext(AppContext);
+ console.log("my time checking karna ka liya ",contractTime,OneMinuteTimer);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   // const [remainingTime, setRemainingTime] = useState(contractTime);
@@ -54,12 +57,12 @@ export default function UnlockGems({ contractTime,OneMinuteTimer  }) {
     }
   };
 
-  console.log(
-    'contractTime',
-    contractTime,
-    `Math.floor(Date.now()/1000) - Number(contractTime)`,
-    Math.floor(Date.now() / 1000) - Number(contractTime)
-  );
+  // console.log(
+  //   'contractTime',
+  //   contractTime,
+  //   `Math.floor(Date.now()/1000) - Number(contractTime)`,
+  //   Math.floor(Date.now() / 1000) - Number(contractTime)
+  // );
 
   return (
     <div className="text-center">
@@ -88,7 +91,8 @@ export default function UnlockGems({ contractTime,OneMinuteTimer  }) {
                 <Countdown
               date={Date.now() + Math.floor(OneMinuteTimer - contractTime) * 1000}
                   renderer={renderer}
-                  onComplete={handleCountdownComplete} // Trigger action on countdown complete
+                  onComplete={handleCountdownComplete}
+                    // Trigger action on countdown complete
                 />
               }
             </p>

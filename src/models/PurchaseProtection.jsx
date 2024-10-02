@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { simulateContract, writeContract, waitForTransactionReceipt } from '@wagmi/core';
 import { config } from '../BlockChainContext/config';
 import { abi, contractAddress } from '../BlockChainContext/helper';
 import Countdown from 'react-countdown';
-
-export default function PurchaseProtection({ ProtectionTime,OneMinuteTimer }) {
+import { AppContext } from '../context/AppContext';
+export default function PurchaseProtection() {
+  const { protectionEndTimeAmount, OneMinuteTimer } = useContext(AppContext);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false); // State to track if time is up
@@ -74,7 +75,7 @@ export default function PurchaseProtection({ ProtectionTime,OneMinuteTimer }) {
             <p className="mt-4 text-black font-semibold">Remaining Time ⏱⏱</p>
             <p className="text-lg text-black font-bold">
               <Countdown
-              date={Date.now() + Math.floor(OneMinuteTimer - ProtectionTime) * 1000}
+              date={Date.now() + Math.floor(OneMinuteTimer - protectionEndTimeAmount) * 1000}
               renderer={renderer}
               
                 onComplete={handleCountdownComplete}

@@ -5,52 +5,45 @@ const Header = () => {
   const { address, isConnected } = useAccount();
   const { open } = useWeb3Modal(); // Use this hook to get the open function
   return (
-    <header className="p-4 relative">
-      <div className="flex flex-col items-center text-center w-full">
-        <img src="/logo.jpg" alt="logo" className='' width={180} height={190} />
-        <div className="mt-4">
-          <h6 className="text-lg text-white font-posey">THE ETH REWARD POOL WITH THE</h6>
-          <h6 className="text-lg text-white font-posey">BEST DAILY REWARDS!</h6>
-          <h6 className="text-lg text-white font-posey mt-2">8% VARIABLE RETURNS DAILY</h6> 
-        </div>
-        {/* Mobile View (Hidden on larger screens) */}
-        <div className="mt-4 block lg:hidden">
-          {isConnected ? (
-            <button
-              className="bg-[#363A41] text-white text-[14px] sm:text-[16px] px-2 sm:px-4 py-[6px] transform scale-90 sm:scale-100 border border-white border-opacity-50 rounded-lg"
-              onClick={() => open()}
-            >
-              {address.slice(0, 4)}...{address.slice(-4)}
-            </button>
-          ) : (
-            <button
-              onClick={() => open()}
-              className="bg-[#363A41] text-white text-[14px] sm:text-[16px] px-1 sm:px-3 py-1 transform scale-90 sm:scale-100 border border-white border-opacity-50 rounded-lg"
-            >
-              Connect Wallet
-            </button>
-          )}
-        </div>
-      </div>
-      {/* Desktop View (Hidden on smaller screens) */}
-      <div className="fixed top-10 right-4 hidden lg:block cursor-pointer">
-        {isConnected ? (
-          <button
-            className="bg-[#363A41] text-white text-[14px] sm:text-[16px] px-2 sm:px-4 py-[6px] transform scale-90 sm:scale-100 border border-white border-opacity-50 rounded-2xl hover:bg-green-700"
-            onClick={() => open()}
-          >
-            {address.slice(0, 4)}...{address.slice(-4)}
-          </button>
-        ) : (
-          <button
-            onClick={() => open()}
-            className="bg-[#363A41] text-white text-[14px] sm:text-[16px] px-1 sm:px-3 py-1 transform scale-90 sm:scale-100 border border-white border-opacity-50 rounded-2xl hover:bg-green-700"
-          >
-            Connect Wallet
-          </button>
-        )}
-      </div>
-    </header>
+    <div className="flex justify-between items-center fixed top-0 w-full z-50 shadow-md px-4 py-2 h-[60px] sm:h-[70px] lg:h-[70px]  bg-gray-700 bg-opacity-80    opacity-3 ">
+    <img
+      src="/logo.jpg"
+      alt="logo"
+      className="cursor-pointer w-[60px] h-[40px] sm:w-[80px] sm:h-[50px] lg:w-[100px] lg:h-[60px]"
+    />
+  
+    {/* Icon Container */}
+    <div className="flex items-center space-x-2 sm:space-x-4 md:space-x-6 lg:space-x-8">
+      <img src="/bace.png" className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] md:w-[36px] md:h-[36px]" alt="Base Icon" />
+      <img src="/book.png" className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] md:w-[36px] md:h-[36px]" alt="Book Icon" />
+      <img src="/telegram.png" className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] md:w-[36px] md:h-[36px]" alt="Telegram Icon" />
+      <img src="/twitter.jpg" className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] md:w-[36px] md:h-[36px]" alt="Twitter Icon" />
+    </div>
+  
+    {/* Wallet Connection Button */}
+    <div className="top-10 right-4 lg:block cursor-pointer">
+      {isConnected ? (
+        <button
+          className="bg-[#363A41] text-white text-[10px] sm:text-[12px] lg:text-[14px] px-2 sm:px-3 py-1 sm:py-2 transform scale-90 sm:scale-100 border border-white border-opacity-50 rounded-2xl hover:bg-green-700"
+          onClick={() => open()}
+        >
+          {address.slice(0, 4)}...{address.slice(-4)}
+        </button>
+      ) : (
+        <button
+          onClick={() => open()}
+          className="bg-[#363A41] text-white text-[10px] sm:text-[12px] lg:text-[14px] px-2 sm:px-3 py-1 sm:py-2 transform scale-90 sm:scale-100 border border-white border-opacity-50 rounded-2xl hover:bg-green-700"
+        >
+          Connect Wallet
+        </button>
+      )}
+    </div>
+  </div>
+  
+
+  
+  
+   
   );
 };
 export default Header;

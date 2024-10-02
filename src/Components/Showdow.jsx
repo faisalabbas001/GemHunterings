@@ -229,7 +229,7 @@ getUserData()
 
   return (
     <div className="flex sm:flex-row flex-col justify-center">
-      <div className="bg-[#FF0000] custom-shadow rounded-md p-6 m-2 text-white text-center">
+      <div className="bg-white   rounded-md p-6 m-2 text-black text-center">
         {/* Rows with Left and Right Text */}
         <div className="flex justify-between mb-4">
           <p>Total Stacked</p>
@@ -295,7 +295,7 @@ getUserData()
 
         {/* Composed/Collect Daily Rewards Buttons */}
 
-        <div className="flex flex-col flex-wrap sm:flex-row justify-between mt-7 space-y-4 sm:space-y-0 sm:space-x-4">
+        {/* <div className="flex flex-col flex-wrap sm:flex-row justify-between mt-7 space-y-4 sm:space-y-0 sm:space-x-4">
           <button onClick={handleCompound} className="bg-[#8B0000] flex-1   rounded-2xl py-2 px-6 sm:px-4 text-lg text-white custom-button">
             Compound
           </button>
@@ -303,25 +303,25 @@ getUserData()
           <button className="bg-[#8B0000]  flex-1 rounded-2xl py-2 px-6 sm:px-4 text-lg text-white custom-button">
             UnStack
           </button>
-        </div>
+        </div> */}
 
         {/* Unlock/Unstack Buttons */}
-        <div className="flex flex-col flex-wrap  sm:flex-row justify-between mt-7 space-y-4 sm:space-y-0 sm:space-x-4">
+        {/* <div className="flex flex-col flex-wrap  sm:flex-row justify-between mt-7 space-y-4 sm:space-y-0 sm:space-x-4">
         <UnlockGems contractTime={Number(conversionLock?.time) || 0} OneMinuteTimer={OneMinuteTimer}  />
           <CollectDailyRewards contractTime={Number(conversionLock?.time) || 0} OneMinuteTimer={OneMinuteTimer} />
-        </div>
+        </div> */}
 
         {/* Withdraw/Purchase Protection Buttons */}
-        <div className="flex flex-col sm:flex-row justify-between mt-7 space-y-4 sm:space-y-0 sm:space-x-4">
+        {/* <div className="flex flex-col sm:flex-row justify-between mt-7 space-y-4 sm:space-y-0 sm:space-x-4">
           <WithDrawGems />
           <PurchaseProtection ProtectionTime={Number(protectionEndTimeAmount) || 0} OneMinuteTimer={OneMinuteTimer} />
-        </div>
+        </div> */}
 
         {/* Reset/Attack Buttons */}
-        <div className="flex flex-col  sm:flex-row justify-between mt-7 space-y-4 sm:space-y-0 sm:space-x-4">
+        {/* <div className="flex flex-col  sm:flex-row justify-between mt-7 space-y-4 sm:space-y-0 sm:space-x-4">
           <ResetCoolDown CoolDownTime={Number( stealCooldownAmount) || 0} OneMinuteTimer={OneMinuteTimer} />
           <Attacks />
-        </div>
+        </div> */}
       </div>
     </div>
   );

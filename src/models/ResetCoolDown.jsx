@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext,useState } from 'react';
 import {
   readContract,
   simulateContract,
   writeContract,
   waitForTransactionReceipt,
 } from '@wagmi/core';
+import { AppContext } from '../context/AppContext';
 import { config } from '../BlockChainContext/config';
 import { abi, contractAddress } from '../BlockChainContext/helper';
 import Countdown from 'react-countdown';
 import { toast } from 'react-toastify';
-export default function ResetCoolDown({ CoolDownTime, OneMinuteTimer }) {
+export default function ResetCoolDown() {
+  const { stealCooldownAmount, OneMinuteTimer } = useContext(AppContext);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false); // Tracks if the countdown is complete
@@ -114,7 +116,7 @@ export default function ResetCoolDown({ CoolDownTime, OneMinuteTimer }) {
             <p className="mt-4 text-black font-semibold">Time Remaining ⏱</p>
             <p className="text-lg text-black font-bold">
               <Countdown
-               date={Date.now() + Math.floor(OneMinuteTimer - CoolDownTime) * 1000}
+               date={Date.now() + Math.floor(OneMinuteTimer -  stealCooldownAmount) * 1000}
                 renderer={renderer}
                 onComplete={handleCountdownComplete}
               />

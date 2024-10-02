@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import {
   simulateContract,
   writeContract,
@@ -9,8 +9,9 @@ import { abi, contractAddress } from '../BlockChainContext/helper';
 import { useAccount } from 'wagmi';
 import { toast } from 'react-toastify';
 import Countdown from 'react-countdown';
-
-export default function CollectDailyRewards({ contractTime,OneMinuteTimer }) {
+import { AppContext } from '../context/AppContext';
+export default function CollectDailyRewards() {
+  const { contractTime, OneMinuteTimer } = useContext(AppContext);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false); // Track if the countdown is complete
