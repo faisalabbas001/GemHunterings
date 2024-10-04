@@ -8,7 +8,6 @@ import {
   contractAddress,
   testTokenAddress,
 } from '../BlockChainContext/helper';
-
 import { config } from '../BlockChainContext/config';
 
 export const AppContext = createContext();
@@ -28,20 +27,19 @@ export const AppProvider = ({ children }) => {
   const [stakedTokensAmount, setStakedTokensAmount] = useState(0);
   const [stealCooldownAmount, setStealCooldownAmount] = useState(0);
   const [stealStreakAmount, setStealStreakAmount] = useState(0);
-  const [OneMinuteTimer, setOneMinuteTimer] = useState(0);
   const [ShowUpdatedData, setShowUpdatedData] = useState(false);
-  
-  const {
-    data: balanceData,
-    isError,
-    isLoading,
-  } = useBalance({
+
+  const { data: balanceData, isError, isLoading } = useBalance({
     address: userAddress,
     token: testTokenAddress,
     chainId: sepolia.id,
   });
-  
-  console.log(balanceData);
+
+  useEffect(() => {
+    if (userAddress) {
+      getUserData();  // Ensure user address is available before calling
+    }
+  }, [userAddress]);
 
   async function getUserData() {
     try {
@@ -51,66 +49,34 @@ export const AppProvider = ({ children }) => {
         functionName: 'getUserData',
         args: [userAddress],
       });
-      console.log("Results is that here", result);
+
       setShowUpdatedData(true);
       setGemBalance(Number(result.gemBalanceAmount));
       setTotalStacke(formatEther(result.stakedTokensAmount));
-      setConversionLock(result?.conversionLock);
-      setGemBalance(formatEther(result?.gemBalanceAmount));
-      setNoOfCompoundsAmount(Number(result?.noOfCompoundsAmount));
-      setProtectionEndTimeAmount(Number(result?.protectionEndTimeAmount));
-      setStakedTokensAmount(Number(result?.stakedTokensAmount));
-      setStealCooldownAmount(Number(result?.stealCooldownAmount));
-      setStealStreakAmount(Number(result?.stealStreakAmount));
-      
+      setConversionLock(result.conversionLock); // Assuming conversionLock has a time property
+      setGemBalance(formatEther(result.gemBalanceAmount));
+      setNoOfCompoundsAmount(Number(result.noOfCompoundsAmount));
+      setProtectionEndTimeAmount(Number(result.protectionEndTimeAmount));
+      setStakedTokensAmount(Number(result.stakedTokensAmount));
+      setStealCooldownAmount(Number(result.stealCooldownAmount));
+      setStealStreakAmount(Number(result.stealStreakAmount));
+
+      console.log("User data result:", result);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching user data:", error);
     }
   }
 
-  // Function to initialize the OneMinuteTimer
-  const initializeTimer = () => {
-    const currentTimestamp = Date.now();
-    const storedExpiry = localStorage.getItem('conversionLockExpiry');
-    const expiryAsNumber = storedExpiry ? parseInt(storedExpiry, 10) : null;
+  // Default value for contractTime to ensure it works even if conversionLock is not set
+  const contractTime = Number(conversionLock?.time) || 0; 
 
-    console.log('Current Timestamp:', currentTimestamp);
-    console.log('Stored Expiry:', storedExpiry);
+  // console.log("contractTime", contractTime);
 
-    if (expiryAsNumber) {
-      if (currentTimestamp < expiryAsNumber) {
-        
-        const remainingTime = Math.floor((expiryAsNumber - currentTimestamp) / 1000);
-        console.log('Remaining Time:', remainingTime);
-        setOneMinuteTimer(remainingTime > 0 ? remainingTime : 0);
-      } else {
-       
-        console.log('Timer expired, clearing stored expiry.');
-        localStorage.removeItem('conversionLockExpiry');
-        setOneMinuteTimer(0); 
-      }
-    } else {
-      
-      const newExpiry = currentTimestamp + 60 * 1000; 
-      localStorage.setItem('conversionLockExpiry', newExpiry.toString());
-      setOneMinuteTimer(60); 
-      console.log('Setting new timer for 60 seconds.');
-    }
-  };
-
-  useEffect(() => {
-    initializeTimer();
-    getUserData(); 
-  }, []); 
-
-  console.log("This is the gem balance", conversionLock?.time);
-  console.log("My minutes timer", OneMinuteTimer); 
-
+  //  console.log("my purchase protection end time", protectionEndTimeAmount);
   return (
     <AppContext.Provider
       value={{
-        contractTime: Number(conversionLock?.time) || 0,
-        OneMinuteTimer,
+        contractTime:Number(conversionLock?.time) || 0,
         ProtectionTime: Number(protectionEndTimeAmount) || 0,
         CoolDownTime: Number(stealCooldownAmount) || 0,
         gemBalance,

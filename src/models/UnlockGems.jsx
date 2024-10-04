@@ -1,4 +1,4 @@
-import React, { useState,useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { simulateContract, writeContract, waitForTransactionReceipt } from '@wagmi/core';
 import { config } from '../BlockChainContext/config';
@@ -7,13 +7,14 @@ import Countdown from 'react-countdown';
 import { AppContext } from '../context/AppContext';
 
 export default function UnlockGems() {
-  const { contractTime, OneMinuteTimer } = useContext(AppContext);
- console.log("my time checking karna ka liya ",contractTime,OneMinuteTimer);
+  const { contractTime  } = useContext(AppContext); // contractTime in seconds (Unix time)
+
+//  const contractTime=1728034884
+  
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  // const [remainingTime, setRemainingTime] = useState(contractTime);
   const [isTimeUp, setIsTimeUp] = useState(false); // State to track if time is up
-
+  
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -53,16 +54,13 @@ export default function UnlockGems() {
       return <Completionist />;
     } else {
       // Render a countdown
-      return isTimeUp ? <span>Time to unlock the jems </span> : <span>{hours}:{minutes}:{seconds}</span>;
+      return isTimeUp ? <span>Time to unlock the gems </span> : <span>{hours}:{minutes}:{seconds}</span>;
     }
   };
 
-  // console.log(
-  //   'contractTime',
-  //   contractTime,
-  //   `Math.floor(Date.now()/1000) - Number(contractTime)`,
-  //   Math.floor(Date.now() / 1000) - Number(contractTime)
-  // );
+  // Calculate remaining time by subtracting current timestamp from contractTime
+  const currentTimeInSeconds = Math.floor(Date.now() / 1000); // Convert current time to seconds
+  const remainingTimeInSeconds = Math.max(contractTime - currentTimeInSeconds, 0); // Ensure remaining time is non-negative
 
   return (
     <div className="text-center">
@@ -89,10 +87,9 @@ export default function UnlockGems() {
             <p id="getinnertext" className="text-lg text-black font-bold">
               {
                 <Countdown
-              date={Date.now() + Math.floor(OneMinuteTimer - contractTime) * 1000}
+                  date={Date.now() + remainingTimeInSeconds * 1000} // Remaining time in milliseconds
                   renderer={renderer}
-                  onComplete={handleCountdownComplete}
-                    // Trigger action on countdown complete
+                  onComplete={handleCountdownComplete} // Trigger action on countdown complete
                 />
               }
             </p>

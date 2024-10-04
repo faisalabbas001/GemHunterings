@@ -1,4 +1,4 @@
-import React, { useState,useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   simulateContract,
   writeContract,
@@ -10,12 +10,14 @@ import { useAccount } from 'wagmi';
 import { toast } from 'react-toastify';
 import Countdown from 'react-countdown';
 import { AppContext } from '../context/AppContext';
+
 export default function CollectDailyRewards() {
-  const { contractTime, OneMinuteTimer } = useContext(AppContext);
+  const { contractTime } = useContext(AppContext); // Contract time (Unix timestamp in seconds)
+  console.log("contract time is here collect daily rewards", contractTime);
+  
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false); // Track if the countdown is complete
-
   const { address: userAddress } = useAccount();
 
   const handleOpen = () => setOpen(true);
@@ -65,9 +67,18 @@ export default function CollectDailyRewards() {
       return <Completionist />;
     } else {
       // Render a countdown
-      return isTimeUp ? <span>Time to  collect rewards </span> : <span>{hours}:{minutes}:{seconds}</span>;
+      return (
+        <span>
+          {hours}:{minutes}:{seconds}
+        </span>
+      );
     }
   };
+
+  // Calculate remaining time (contractTime is in seconds, Date.now() is in milliseconds)
+  const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+  const remainingTimeInSeconds = Math.max(contractTime - currentTimeInSeconds, 0); // Ensure non-negative remaining time
+
   return (
     <div className="text-center">
       {/* Button to open the modal */}
@@ -97,9 +108,9 @@ export default function CollectDailyRewards() {
             <p className="mt-4 text-black font-semibold">Remaining Time ⏱</p>
             <p className="text-lg text-black font-bold">
               <Countdown
-               date={Date.now() + Math.floor(OneMinuteTimer - contractTime) * 1000}
+                date={Date.now() + remainingTimeInSeconds * 1000} // Calculate remaining time in milliseconds
                 renderer={renderer}
-                onComplete={handleCountdownComplete}
+                onComplete={handleCountdownComplete} // Enable button after countdown completes
               />
             </p>
 

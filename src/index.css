@@ -9,14 +9,40 @@
 }
 
 body {
-  background-image: url("/background.jpg");
+  background-image: url("/backgrounded.png");
   background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center top; /* Ensures background starts at the top */
+  background-repeat: no-repeat; 
+  background-position: center top; 
   background-attachment: fixed;
   font-family: 'PoseyTextured', 'Montserrat', sans-serif;
-    /* Add padding to account for the navbar */
+   
 }
+
+
+
+
+/* body {
+  background-image: url("/backgroundcheck3.png");
+  background-size: cover;
+  background-repeat: no-repeat; 
+  background-position: center top; 
+  background-attachment: fixed;
+  font-family: 'PoseyTextured', 'Montserrat', sans-serif;
+   
+} */
+
+/* body {
+  background-image: url("/backgroundcheck4.png");
+  background-size: cover;
+  background-repeat: no-repeat; 
+  background-position: 0 0 50%; 
+  background-attachment: fixed;
+  font-family: 'PoseyTextured', 'Montserrat', sans-serif;
+   
+} */
+
+
+ 
 
 @media (max-width: 640px) {
   body {

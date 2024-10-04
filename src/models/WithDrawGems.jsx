@@ -52,6 +52,10 @@ const showloading=()=>{
     
 
   };
+
+  useEffect(()=>{
+
+  },[])
   const handleWithdraw=async ()=>{
     try {
       console.log(eth);
@@ -73,6 +77,7 @@ const showloading=()=>{
     }
 
   }
+
   const handleClose = () => setOpen(false);
  
 

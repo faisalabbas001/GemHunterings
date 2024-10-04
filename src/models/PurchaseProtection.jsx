@@ -1,22 +1,24 @@
-import React, { useState,useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { simulateContract, writeContract, waitForTransactionReceipt } from '@wagmi/core';
 import { config } from '../BlockChainContext/config';
 import { abi, contractAddress } from '../BlockChainContext/helper';
 import Countdown from 'react-countdown';
 import { AppContext } from '../context/AppContext';
+
 export default function PurchaseProtection() {
-  const { protectionEndTimeAmount, OneMinuteTimer } = useContext(AppContext);
+  const { ProtectionTime } = useContext(AppContext); // Use ProtectionTime from context
+//   console.log("ProtectionTime is here, main value is: ", ProtectionTime); // Log the correct variable
+//  const ProtectionTime=1728035184
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isTimeUp, setIsTimeUp] = useState(false); // State to track if time is up
+  const [isTimeUp, setIsTimeUp] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // Countdown completion handler
   const handleCountdownComplete = () => {
-    setIsTimeUp(true); // Set time up to true when countdown is complete
+    setIsTimeUp(true); // Enable the button when countdown is complete
   };
 
   const handleAddDay = async () => {
@@ -43,7 +45,6 @@ export default function PurchaseProtection() {
 
   const Completionist = () => <span>Time Ended</span>;
 
-  // Countdown renderer callback with condition
   const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
       return <Completionist />;
@@ -51,6 +52,9 @@ export default function PurchaseProtection() {
       return isTimeUp ? <span>Time to purchase protection</span> : <span>{hours}:{minutes}:{seconds}</span>;
     }
   };
+
+  const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+  const remainingTimeInSeconds = Math.max(ProtectionTime - currentTimeInSeconds, 0); // Use ProtectionTime
 
   return (
     <div className="text-center">
@@ -75,16 +79,15 @@ export default function PurchaseProtection() {
             <p className="mt-4 text-black font-semibold">Remaining Time ⏱⏱</p>
             <p className="text-lg text-black font-bold">
               <Countdown
-              date={Date.now() + Math.floor(OneMinuteTimer - protectionEndTimeAmount) * 1000}
-              renderer={renderer}
-              
+                date={Date.now() + remainingTimeInSeconds * 1000} // Correct remaining time calculation
+                renderer={renderer}
                 onComplete={handleCountdownComplete}
               />
             </p>
 
             <button
               className="mt-6 bg-red-500 flex justify-center items-center text-white px-4 py-2 rounded w-full relative"
-              disabled={!isTimeUp || loading} // Disable button if time is not up or loading
+              disabled={!isTimeUp || loading}
               onClick={handleAddDay}
               style={{ backgroundColor: isTimeUp ? 'red' : 'gray' }}
             >

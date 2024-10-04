@@ -1,4 +1,4 @@
-import React, { useContext,useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   readContract,
   simulateContract,
@@ -10,21 +10,19 @@ import { config } from '../BlockChainContext/config';
 import { abi, contractAddress } from '../BlockChainContext/helper';
 import Countdown from 'react-countdown';
 import { toast } from 'react-toastify';
+
 export default function ResetCoolDown() {
-  const { stealCooldownAmount, OneMinuteTimer } = useContext(AppContext);
+  const { CoolDownTime } = useContext(AppContext); // Access CoolDownTime from context
+  // console.log("my reset cooldown time is here", CoolDownTime);
+   
+  //  const CoolDownTime=1728035364
+
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false); // Tracks if the countdown is complete
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const showLoading = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  };
 
   // Countdown completion handler
   const handleCountdownComplete = () => {
@@ -87,6 +85,10 @@ export default function ResetCoolDown() {
     }
   };
 
+  // Calculate remaining time for the cooldown in seconds
+  const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+  const remainingTimeInSeconds = Math.max(CoolDownTime - currentTimeInSeconds, 0); // Ensure it doesn't go negative
+
   return (
     <div className="text-center">
       {/* Button to open the modal */}
@@ -116,7 +118,7 @@ export default function ResetCoolDown() {
             <p className="mt-4 text-black font-semibold">Time Remaining ⏱</p>
             <p className="text-lg text-black font-bold">
               <Countdown
-               date={Date.now() + Math.floor(OneMinuteTimer -  stealCooldownAmount) * 1000}
+                date={Date.now() + remainingTimeInSeconds * 1000} // Set countdown timer correctly
                 renderer={renderer}
                 onComplete={handleCountdownComplete}
               />
@@ -126,7 +128,7 @@ export default function ResetCoolDown() {
             <button
               className="mt-6 flex justify-center items-center bg-red-500 text-white px-4 py-2 rounded w-full"
               disabled={!isTimeUp || loading} // Disabled until time is up or loading
-              onClick={showLoading}
+              onClick={handleReset}
               style={{ backgroundColor: isTimeUp ? 'red' : 'gray' }}
             >
               {loading && (
@@ -139,7 +141,7 @@ export default function ResetCoolDown() {
                   </span>
                 </div>
               )}
-              <span onClick={handleReset} className={loading ? 'invisible' : ''}>
+              <span className={loading ? 'invisible' : ''}>
                 {isTimeUp ? 'Reset' : 'Cannot Reset Yet'}
               </span>
             </button>
