@@ -153,10 +153,10 @@ const Leaderboard = () => {
         return data.map((item, index) => (
             <div 
                 key={index} 
-                className="flex items-center justify-between bg-gradient-to-r from-purple-500 to-indigo-600 bg-opacity-75 text-white p-4 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
+                className="flex items-center justify-between bg-blue-gray-300 bg-opacity-30 text-white p-4 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"
             >
                 <span className="text-2xl">{item.avatar}</span>
-                <span className="text-xl font-bold">{item.name}</span>
+                <span className="text-xl ">{item.name}</span>
                 <span>{activeTab === 'hunters' ? item.percentage : activeTab === 'stealers' ? `${item.streak} steals` : `${item.defended} defenses`}</span>
             </div>
         ));
@@ -192,7 +192,8 @@ const Leaderboard = () => {
                 </div>
 
                 {/* Filter Dropdown */}
-                <div className="flex justify-center mb-10">
+                <div className="flex justify-center items-center mb-10">
+                    <span className=' mr-2 text-lg'>filter</span>
                     <select 
                         value={filter}
                         onChange={(e) => setFilter(e.target.value)}
@@ -206,7 +207,7 @@ const Leaderboard = () => {
                 </div>
 
                 {/* Leaderboard Data */}
-                <div className="space-y-4">
+                <div className="space-y-4  bg-gray-500 bg-opacity-30 rounded-lg p-5">
                     {renderData()}
                 </div>
             </div>
