@@ -1,7 +1,8 @@
 import React from 'react';
 import { useAccount } from 'wagmi';
 import { useWeb3Modal } from "@web3modal/wagmi/react";
-const Header = () => {
+import { Link } from "react-router-dom";
+const  Header = () => {
   const { address, isConnected } = useAccount();
   const { open } = useWeb3Modal(); // Use this hook to get the open function
   return (
@@ -11,9 +12,11 @@ const Header = () => {
       alt="logo"
       className="cursor-pointer w-[60px] h-[40px] sm:w-[80px] sm:h-[50px] lg:w-[100px] lg:h-[60px]"
     />
+    
   
     {/* Icon Container */}
     <div className="flex items-center space-x-2 sm:space-x-4 md:space-x-6 lg:space-x-8">
+    <Link to="/leader-board" className="text-white text-[14px] sm:text-[17px] lg:text-[22px] ">Leader-Board</Link>
       <img src="/bace.png" className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] md:w-[36px] md:h-[36px]" alt="Base Icon" />
       <img src="/book.png" className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] md:w-[36px] md:h-[36px]" alt="Book Icon" />
       <img src="/telegram.png" className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] md:w-[36px] md:h-[36px]" alt="Telegram Icon" />
