@@ -51,7 +51,7 @@ function AppComponent() {
 
 </div>
 
-          {/* <Footer /> */}
+          <Footer />
         </>
       )}
     </>
