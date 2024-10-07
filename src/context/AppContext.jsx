@@ -3,6 +3,7 @@ import { useAccount, useBalance } from 'wagmi';
 import { readContract } from '@wagmi/core'; 
 import { formatEther } from 'ethers'; 
 import { sepolia } from 'viem/chains'; 
+import { getBalance,simulateContract,writeContract,waitForTransactionReceipt } from '@wagmi/core';
 import {
   abi,
   contractAddress,
@@ -67,6 +68,64 @@ export const AppProvider = ({ children }) => {
     }
   }
 
+  const tokenApproval = async (value) => {
+    try {
+      const { request } = await simulateContract(config, {
+        abi: erc20Abi,
+        address: testTokenAddress,
+        functionName: "approve",
+        //cook totalPrice
+        args: [contractAddress, parseEther(value)],
+      });
+      const hash = await writeContract(config, request);
+      const transactionReceipt = await waitForTransactionReceipt(config, {
+        // confirmations: 2,
+        hash: hash,
+      });
+
+      console.log("token Aapproved");
+      toast.success("Token Approved");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  const handleStake = async () => {
+    try {
+      await tokenApproval(stakeAmount)
+      const { request } = await simulateContract(config, {
+        abi: abi,
+        address: contractAddress,
+        functionName: 'stakeTokens',
+        args: [parseEther(stakeAmount)],
+      });
+      const hash = await writeContract(config, request);
+      const transactionReceipt = await waitForTransactionReceipt(config, {
+        // confirmations: 2,
+        hash: hash,
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCompound= async () => {
+    try {
+      const { request } = await simulateContract(config, {
+        abi: abi,
+        address: contractAddress,
+        functionName: 'compoundTokens',
+      });
+      const hash = await writeContract(config, request);
+      const transactionReceipt = await waitForTransactionReceipt(config, {
+        // confirmations: 2,
+        hash: hash,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // Default value for contractTime to ensure it works even if conversionLock is not set
   const contractTime = Number(conversionLock?.time) || 0; 
 
@@ -90,6 +149,8 @@ export const AppProvider = ({ children }) => {
         stealStreakAmount,
         ShowUpdatedData,
         setStakeAmount,
+        handleCompound,
+        handleStake
       }}
     >
       {children}
