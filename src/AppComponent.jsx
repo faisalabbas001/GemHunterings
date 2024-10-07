@@ -41,9 +41,9 @@ function AppComponent() {
     <CompoundCard />
     <CompoundButtonCard />
     <UnStackButton />
-    <UnLockGemsCard />
+    {/* <UnLockGemsCard /> */}
     <CollectRewardsCard />
-    <WithDrawGemsCard />
+    {/* <WithDrawGemsCard /> */}
     <PurchaseProtectionCard />
     <ResetCoolDownCard />
     <AttackCard />

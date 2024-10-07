@@ -16,11 +16,11 @@ const  Header = () => {
   
     {/* Icon Container */}
     <div className="flex items-center space-x-2 sm:space-x-4 md:space-x-6 lg:space-x-8">
+    {/* <Link to="/leader-board" className="text-white text-[14px] sm:text-[17px] lg:text-[22px] ">Dashboard</Link> */}
     <Link to="/leader-board" className="text-white text-[14px] sm:text-[17px] lg:text-[22px] ">Leader-Board</Link>
-      <img src="/bace.png" className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] md:w-[36px] md:h-[36px]" alt="Base Icon" />
-      <img src="/book.png" className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] md:w-[36px] md:h-[36px]" alt="Book Icon" />
-      <img src="/telegram.png" className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] md:w-[36px] md:h-[36px]" alt="Telegram Icon" />
-      <img src="/twitter.jpg" className="cursor-pointer w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] md:w-[36px] md:h-[36px]" alt="Twitter Icon" />
+    <Link to="/calculater" className="text-white text-[14px] sm:text-[17px] lg:text-[22px] ">Convert Gems</Link>
+    <Link to="/help" className="text-white text-[14px] sm:text-[17px] lg:text-[22px] ">Help/FAQ</Link>
+     
     </div>
   
     {/* Wallet Connection Button */}
