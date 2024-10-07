@@ -1,3 +1,4 @@
+import { AiTwotoneBell } from "react-icons/ai"; 
 import React from 'react';
 import { useAccount } from 'wagmi';
 import { useWeb3Modal } from "@web3modal/wagmi/react";
@@ -24,7 +25,10 @@ const  Header = () => {
     </div>
   
     {/* Wallet Connection Button */}
-    <div className="top-10 right-4 lg:block cursor-pointer">
+    <div className="top-10 right-4  flex items-center justify-center cursor-pointer">
+      <button className=" text-white me-2 text-lg sm:text-xl lg:text-2xl rounded-full bg-[#363A41] w-10 h-10 flex items-center justify-center ">
+        <AiTwotoneBell />
+      </button>
       {isConnected ? (
         <button
           className="bg-[#363A41] text-white text-[10px] sm:text-[12px] lg:text-[14px] px-2 sm:px-3 py-1 sm:py-2 transform scale-90 sm:scale-100 border border-white border-opacity-50 rounded-2xl hover:bg-green-700"
