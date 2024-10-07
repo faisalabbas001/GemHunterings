@@ -170,22 +170,22 @@ const Leaderboard = () => {
                 <h1 className="text-5xl text-center font-extrabold mb-10">Leaderboard</h1>
                 
                 {/* Tabs */}
-                <div className="flex justify-center space-x-4 mb-8 bg-gray-500 bg-opacity-30 rounded-lg p-4">
+                <div className="flex justify-center space-x-4 mb-8 bg-black  bg-opacity-30 rounded-lg p-4">
                     <button 
                         onClick={() => setActiveTab('hunters')} 
-                        className={`px-6 py-3 rounded-xl font-bold text-lg ${activeTab === 'hunters' ? 'bg-gray-700 bg-opacity-50' : 'bg-gray-700 bg-opacity-30 hover:bg-opacity-50'} transition duration-300`}
+                        className={`px-6 py-3 rounded-xl text-lg ${activeTab === 'hunters' ? 'bg-gray-700 bg-opacity-50' : 'bg-gray-700 bg-opacity-30 hover:bg-opacity-50'} transition duration-300`}
                     >
                         Top Hunters
                     </button>
                     <button 
                         onClick={() => setActiveTab('stealers')} 
-                        className={`px-6 py-3 rounded-xl font-bold text-lg ${activeTab === 'stealers' ? 'bg-gray-700 bg-opacity-50' : 'bg-gray-700 bg-opacity-30 hover:bg-opacity-50'} transition duration-300`}
+                        className={`px-6 py-3 rounded-xl text-lg ${activeTab === 'stealers' ? 'bg-gray-700 bg-opacity-50' : 'bg-gray-700 bg-opacity-30 hover:bg-opacity-50'} transition duration-300`}
                     >
                         Top Stealers
                     </button>
                     <button 
                         onClick={() => setActiveTab('defenders')} 
-                        className={`px-6 py-3 rounded-xl font-bold text-lg ${activeTab === 'defenders' ?'bg-gray-700 bg-opacity-50' : 'bg-gray-700 bg-opacity-30 hover:bg-opacity-50'} transition duration-300`}
+                        className={`px-6 py-3 rounded-xl  text-lg ${activeTab === 'defenders' ?'bg-gray-700 bg-opacity-50' : 'bg-gray-700 bg-opacity-30 hover:bg-opacity-50'} transition duration-300`}
                     >
                         Top Defenders
                     </button>
@@ -207,7 +207,7 @@ const Leaderboard = () => {
                 </div>
 
                 {/* Leaderboard Data */}
-                <div className="space-y-4  bg-gray-500 bg-opacity-30 rounded-lg p-5">
+                <div className="space-y-4  bg-black bg-opacity-30 rounded-lg p-5 mb-10">
                     {renderData()}
                 </div>
             </div>
