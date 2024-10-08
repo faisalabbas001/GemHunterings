@@ -13,6 +13,7 @@ import { toast, ToastContainer } from 'react-toastify';
 // Socket.IO client initialization
 const socket = io('http://localhost:5000'); // Your server URL
 
+
 function App() {
    const {address: userAddress} = useAccount();
 
@@ -23,30 +24,37 @@ function App() {
     // Event listeners for all the different blockchain events
     socket.on('huntersHiredNotification', (notification) => {
       displayToast(notification.message, notification.amount, notification.time);
+      console.log(notification);
     });
 
     socket.on('gemsConvertedNotification', (notification) => {
       displayToast(notification.message, notification.amount, notification.time);
+      console.log(notification);
     });
 
     socket.on('protectionPurchasedNotification', (notification) => {
       displayToast(notification.message, notification.protectionEndTime, notification.time);
+      console.log(notification);
     });
 
     socket.on('stealAttemptNotification', (notification) => {
       displayToast(notification.message, notification.amount, notification.time);
+      console.log(notification);
     });
 
     socket.on('conversionLockedNotification', (notification) => {
       displayToast(notification.message, notification.amount, notification.time);
+      console.log(notification);
     });
 
     socket.on('conversionReleasedNotification', (notification) => {
       displayToast(notification.message, notification.amount, notification.time);
+      console.log(notification);
     });
 
     socket.on('tokensUnstakedNotification', (notification) => {
       displayToast(notification.message, '', notification.time);
+      console.log(notification)
     });
 
     return () => {
@@ -63,6 +71,7 @@ function App() {
 
   // Function to display the notification using Toast
   const displayToast = (message, detail, time) => {
+    console.log( "notification",message, detail, time)
     toast(`${message} ${detail ? `| Detail: ${detail}` : ''} at ${time}`, {
       position: 'top-right',
       autoClose: 5000,
