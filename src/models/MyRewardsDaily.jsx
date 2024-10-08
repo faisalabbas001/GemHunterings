@@ -46,7 +46,7 @@ export default function CollectDailyRewards() {
         hash: hash,
       });
 
-      toast.success('Collected Rewards Successfully!');
+      // toast.success('Collected Rewards Successfully!');
     } catch (error) {
       console.log(error);
       toast.error('Failed to Collect Rewards. Please try again.');

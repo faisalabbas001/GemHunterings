@@ -70,7 +70,7 @@ const showloading=()=>{
         // confirmations: 2,
         hash: hash,
       });
-      toast.success(' WithDrawGems  Successfully !');
+      // toast.success(' WithDrawGems  Successfully !');
     } catch (error) {
       console.log(error);
       toast.error('Failed to WithDrawGems . Please try again.');

@@ -60,7 +60,7 @@ export default function ResetCoolDown() {
           hash: hash,
         });
         console.log('Protection purchased successfully!', transactionReceipt);
-        toast.success('Protection purchased successfully!');
+        // toast.success('Protection purchased successfully!');
       } catch (error) {
         console.error('Error writing contract:', error);
       }

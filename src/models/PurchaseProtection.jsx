@@ -34,7 +34,7 @@ export default function PurchaseProtection() {
       const transactionReceipt = await waitForTransactionReceipt(config, {
         hash: hash,
       });
-      toast.success('Protection purchased successfully!');
+      // toast.success('Protection purchased successfully!');
     } catch (error) {
       console.error(error);
       toast.error('Failed to purchase protection. Please try again.');

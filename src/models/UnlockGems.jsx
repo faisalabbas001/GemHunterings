@@ -36,7 +36,7 @@ export default function UnlockGems() {
       const transactionReceipt = await waitForTransactionReceipt(config, {
         hash: hash,
       });
-      toast.success('Gems successfully unlocked!');
+      // toast.success('Gems successfully unlocked!');
     } catch (error) {
       console.error(error);
       toast.error('Failed to unlock gems. Please try again.');

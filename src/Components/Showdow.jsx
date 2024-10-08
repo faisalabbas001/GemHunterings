@@ -16,8 +16,9 @@ import {
   erc20Abi,
 } from '../BlockChainContext/helper';
 import { useAccount, useBalance } from 'wagmi';
-import { sepolia } from 'viem/chains';
+import { polygonAmoy, sepolia } from 'viem/chains';
 import { formatEther } from 'ethers';
+import { toast } from 'react-toastify';
 
 const Showdow = () => {
   const { address: userAddress } = useAccount();
@@ -42,7 +43,7 @@ const Showdow = () => {
   } = useBalance({
     address: userAddress,
     token: testTokenAddress, // If you're querying a token balance
-    chainId: sepolia.id,
+    chainId: polygonAmoy.id,
   });
   console.log(balanceData);
 
