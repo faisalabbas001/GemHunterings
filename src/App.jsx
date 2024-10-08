@@ -15,12 +15,12 @@ const socket = io('http://localhost:5000'); // Your server URL
 
 
 function App() {
-   const {address: userAddress} = useAccount();
+   const {address} = useAccount();
 
    useEffect(() => {
     // Register user's wallet address on connection
-    socket.emit('registerAddress', userAddress);
-
+    socket.emit('registerAddress', address);
+    console.log("registerAddress", address)
     // Event listeners for all the different blockchain events
     socket.on('huntersHiredNotification', (notification) => {
       displayToast(notification.message, notification.amount, notification.time);
@@ -67,7 +67,7 @@ function App() {
       socket.off('conversionReleasedNotification');
       socket.off('tokensUnstakedNotification');
     };
-  }, [userAddress]);
+  }, [address]);
 
   // Function to display the notification using Toast
   const displayToast = (message, detail, time) => {
