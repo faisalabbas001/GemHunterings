@@ -10,11 +10,12 @@ import { config } from '../BlockChainContext/config';
 import { abi, contractAddress } from '../BlockChainContext/helper';
 import Countdown from 'react-countdown';
 import { toast } from 'react-toastify';
+import { formatEther, parseEther } from 'viem';
 
 export default function ResetCoolDown() {
-  const { CoolDownTime } = useContext(AppContext); // Access CoolDownTime from context
+  const { CoolDownTime, stakedTokensAmount } = useContext(AppContext); // Access CoolDownTime from context
   // console.log("my reset cooldown time is here", CoolDownTime);
-   
+
   //  const CoolDownTime=1728035364
 
   const [open, setOpen] = useState(false);
@@ -30,30 +31,41 @@ export default function ResetCoolDown() {
   };
 
   const handleReset = async () => {
-    console.log('Resetting cooldown...');
     try {
-      const result = await readContract(config, {
+      const totalSupply = await readContract(config, {
         abi,
         address: contractAddress,
-        functionName: 'getUserStakePercentage',
+        functionName: 'totalSupply',
       });
-      console.log(result);
+      //console.log(totalSupply);
+      const totalSupplyInt = formatEther(totalSupply);
+      const stakeTokensInt = stakedTokensAmount.toLocaleString('fullwide', {
+        useGrouping: false,
+      });
+      const userStakePercentage = formatEther(
+        (stakeTokensInt / totalSupplyInt) * 100
+      );
+      // console.log(userStakePercentage);
+      // //console.log(normalValue);
+      // console.log(totalSupplyInt);
+      // console.log( stakedTokensAmount);
 
       let noOfEth;
-      if (result.data < 0.5) {
+      if (userStakePercentage < 0.5) {
         noOfEth = 0.01;
-      } else if (result.data >= 0.5 && result.data < 1) {
+      } else if (userStakePercentage >= 0.5 && userStakePercentage < 1) {
         noOfEth = 0.02;
-      } else if (result.data >= 1) {
+      } else if (userStakePercentage >= 1) {
         noOfEth = 0.03;
       }
 
       try {
+        console.log(noOfEth);
         const { request } = await simulateContract(config, {
           abi,
           address: contractAddress,
-          functionName: 'purchaseProtection',
-          value: parseEther(noOfEth),
+          functionName: 'resetStealCooldown',
+          value: parseEther(noOfEth.toString()),
         });
         const hash = await writeContract(config, request);
         const transactionReceipt = await waitForTransactionReceipt(config, {
@@ -80,14 +92,19 @@ export default function ResetCoolDown() {
       return isTimeUp ? (
         <span>Cooldown is ready to be reset</span>
       ) : (
-        <span>{hours}:{minutes}:{seconds}</span>
+        <span>
+          {hours}:{minutes}:{seconds}
+        </span>
       );
     }
   };
 
   // Calculate remaining time for the cooldown in seconds
   const currentTimeInSeconds = Math.floor(Date.now() / 1000);
-  const remainingTimeInSeconds = Math.max(CoolDownTime - currentTimeInSeconds, 0); // Ensure it doesn't go negative
+  const remainingTimeInSeconds = Math.max(
+    CoolDownTime - currentTimeInSeconds,
+    0
+  ); // Ensure it doesn't go negative
 
   return (
     <div className="text-center">

@@ -15,12 +15,12 @@ import {
   testTokenAddress,
   erc20Abi,
 } from '../BlockChainContext/helper';
-import { useAccount, useBalance } from 'wagmi';
+import { useAccount, useBalance,useContractRead } from 'wagmi';
 import { polygonAmoy, sepolia } from 'viem/chains';
 import { formatEther } from 'ethers';
 import { toast } from 'react-toastify';
 
-const Showdow = () => {
+const Showdow =async () => {
   const { address: userAddress } = useAccount();
 
   const [inputValue, setInputValue] = useState('');
@@ -46,6 +46,8 @@ const Showdow = () => {
     chainId: polygonAmoy.id,
   });
   console.log(balanceData);
+
+
 
   async function getUserData() {
     try {
@@ -96,6 +98,7 @@ const Showdow = () => {
           return 0; // Default to 0 if the timer has expired
         }
       });
+      
       
       setConversionLock(result?.conversionLock); // Assuming conversionLock is part of the result
       setGemBalance(formatEther(result.gemBalanceAmount)); // Assuming gemBalanceAmount is part of the result
@@ -182,6 +185,7 @@ getUserData()
       console.log(error);
     }
   };
+
 
 
   const handleStake = async () => {
