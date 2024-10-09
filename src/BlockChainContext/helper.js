@@ -940,7 +940,7 @@ export const abi=[
 		"stateMutability": "view",
 		"type": "function"
 	}
-]
+];
 export const contractAddress="0xB95B97Ae3dCCb52C45C6C5d11dC0144BC4394F1b";
 export const decimal=18;
 
