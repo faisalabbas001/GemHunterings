@@ -16,7 +16,8 @@ import PurchaseProtectionCard from './Components/Cards/PurChaseProtectionCard';
 import ResetCoolDownCard from './Components/Cards/ResetCoolDownCard';
 import AttackCard from './Components/Cards/AttactCard';
 
-function AppComponent() {
+// eslint-disable-next-line react/prop-types
+function AppComponent({isNewNotification,notifications,setIsNewNotification}) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,8 +33,8 @@ function AppComponent() {
       <Loader loading={loading} /> 
       {!loading && (
         <>
-          <ToastContainer />
-          <Header />
+          {/* <ToastContainer /> */}
+          <Header isNewNotificationOne={isNewNotification} notifications={notifications} setIsNewOneNotification={setIsNewNotification} />
           {/* Main Container for Cards */}
           <div className=" flex flex-col justify-end items-center lg:min-h-screen mt-16 lg:mt-10 p-4">
   {/* First Row of Cards */}
@@ -44,7 +45,7 @@ function AppComponent() {
     {/* <UnLockGemsCard /> */}
     <CollectRewardsCard />
     {/* <WithDrawGemsCard /> */}
-    <PurchaseProtectionCard />
+    {/* <PurchaseProtectionCard /> */}
     <ResetCoolDownCard />
     <AttackCard />
   </div>

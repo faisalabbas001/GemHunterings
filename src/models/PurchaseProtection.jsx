@@ -6,16 +6,13 @@ import { abi, contractAddress } from '../BlockChainContext/helper';
 import Countdown from 'react-countdown';
 import { AppContext } from '../context/AppContext';
 
-export default function PurchaseProtection() {
+export default function PurchaseProtection({setisProtectionsShieldActive}) {
   const { ProtectionTime } = useContext(AppContext); // Use ProtectionTime from context
 //   console.log("ProtectionTime is here, main value is: ", ProtectionTime); // Log the correct variable
 //  const ProtectionTime=1728035184
-  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const handleCountdownComplete = () => {
     setIsTimeUp(true); // Enable the button when countdown is complete
@@ -30,7 +27,7 @@ export default function PurchaseProtection() {
         functionName: 'purchaseProtection',
       });
       const hash = await writeContract(config, request);
-      toast.info(`Transaction sent! Hash: ${hash}`);
+      // toast.info(`Transaction sent! Hash: ${hash}`);
       const transactionReceipt = await waitForTransactionReceipt(config, {
         hash: hash,
       });
@@ -58,18 +55,11 @@ export default function PurchaseProtection() {
 
   return (
     <div className="text-center">
-      <button
-        onClick={handleOpen}
-        className="bg-[#8B0000] rounded-2xl py-2 sm:px-6 text-lg text-white w-full flex items-center justify-center"
-      >
-        Purchase Protection
-      </button>
-
-      {open && (
+      
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
             <button
-              onClick={handleClose}
+              onClick={()=>setisProtectionsShieldActive(false)}
               className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
             >
               ✖️
@@ -111,7 +101,7 @@ export default function PurchaseProtection() {
             </button>
           </div>
         </div>
-      )}
+      
     </div>
   );
 }
