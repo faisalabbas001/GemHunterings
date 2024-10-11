@@ -37,7 +37,7 @@ const Footer = () => {
         </div>
 
         <div className="container  px-4 text-center">
-        <p className="text-sm text-gray-400">
+        <p className="text-sm text-gray-400 my-3">
           © {new Date().getFullYear()} Gem Hunters. All rights reserved.
         </p>
       </div>

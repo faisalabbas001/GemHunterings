@@ -32,7 +32,7 @@ const HelpFaq = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 font-sans text-white py-10 px-4 lg:px-20">
+    <div className="min-h-screen -mb-4 bg-gray-900 bg-opacity-40 font-sans text-white py-10 px-4 lg:px-20 pt-40">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-mono font-bold text-center mb-10">Help & FAQ</h1>
 

@@ -39,7 +39,7 @@ const CollectRewardsCard = () => {
            
    
  
-    <MyRewardsDaily/>
+    <MyRewardsDaily handleClose={handleClose} />
              
 
           </div>

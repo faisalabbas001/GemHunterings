@@ -20,7 +20,7 @@ import { polygonAmoy, sepolia } from 'viem/chains';
 import { formatEther } from 'ethers';
 import { toast } from 'react-toastify';
 
-const Showdow =async () => {
+const Showdow = () => {
   const { address: userAddress } = useAccount();
 
   const [inputValue, setInputValue] = useState('');
@@ -254,19 +254,26 @@ getUserData()
         </div>
 
         {/* Input Field */}
-        <div className="flex items-center border-4 border-black bg-white p-2 rounded-lg">
-          <input
-            type="search"
-            className="flex-1 text-black text-right outline-none pr-12"
-            placeholder="0"
-            value={stakeAmount}
-            onChange={(e) => setStakeAmount(e.target.value)}
-          />
+        <div className="flex items-center border-2 border-black border-opacity-75 mb-1 bg-white p-2 rounded-md">
+        <input
+  type="text"
+  className="flex-1 text-black text-right outline-none pe-3 ps-3"
+  placeholder="0"
+  value={stakeAmount}
+  onChange={(e) => {
+    // Prevent invalid characters
+    const value = e.target.value;
+    if (/^\d*\.?\d*$/.test(value)) {
+      setStakeAmount(value);
+    }
+  }}
+/>
+
           <div
-            className="flex items-center ml-2 cursor-pointer"
+            className="flex items-center me-2 cursor-pointer"
             onClick={clearInput}
           >
-            <svg
+            {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5 mr-2 text-blue-500"
               fill="none"
@@ -279,8 +286,8 @@ getUserData()
                 strokeWidth={2}
                 d="M6 18L18 6M6 6l12 12"
               />
-            </svg>
-            <p className="text-black text-xs md:text-sm lg:text-base flex-shrink-0">
+            </svg> */}
+            <p className="text-green-800 text-xs md:text-sm lg:text-base flex-shrink-0">
               {balanceData?.symbol}
             </p>
           </div>

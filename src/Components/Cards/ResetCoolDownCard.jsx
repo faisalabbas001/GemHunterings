@@ -39,7 +39,7 @@ const WithDrawGemsCard = () => {
               ✖
             </button>
  
-   <ResetCoolDown/>
+   <ResetCoolDown handleClose={handleClose} />
              
 
           

@@ -37,7 +37,7 @@ const AttackCard = () => {
               ✖
             </button>
  
-  <Attacks/>
+  <Attacks handleClose={handleClose}/>
              
 
           

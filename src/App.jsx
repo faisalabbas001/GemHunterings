@@ -1,11 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import './App.css';
-import AppComponent from './AppComponent';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import LeaderBoard from './Pages/LeaderBoard';
-import NotFound from './Pages/NotFound';
-import Calculater from  "./Pages/calculater";
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 import axios from 'axios';
 import { io } from 'socket.io-client';
@@ -14,7 +10,15 @@ import 'react-toastify/dist/ReactToastify.css'; // Ensure you import Toastify CS
 
 import moment from'moment';
 import { ApiUrl } from './utils/Links';
-import HelpFaq from './Pages/HelpFaq';
+import Header from './Components/Header';
+import Footer from './Components/Footer';
+import Loader from './Loader';
+
+const AppComponent = lazy(() => import('./AppComponent'));
+const Leaderboard = lazy(() => import('./Pages/LeaderBoard'));
+const HelpFaq = lazy(() => import('./pages/HelpFaq'));
+const Calculater = lazy(() => import('./pages/Calculater'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Socket.IO client initialization
 const socket = io('http://localhost:5000', {
@@ -109,7 +113,7 @@ function App() {
    const NotificationsData = async () => {
     try {
       const res = await axios.get(`${ApiUrl}/${address ? address : ''}`);
-      const latestNotifications = res.data.reverse(); // Reverse the array to show the latest first
+      const latestNotifications = res.data.slice(-10).reverse(); // Reverse the array to show the latest first
       setNotifications(latestNotifications);
       console.log(latestNotifications);
     } catch (error) {
@@ -129,16 +133,22 @@ function App() {
 
    return (
      <>
-       <BrowserRouter>
-         <Routes>
-           <Route index element={<AppComponent isNewNotification={isNewNotification} notifications={notifications} setIsNewNotification={setIsNewNotification} />} />
-           <Route path="/leader-board" element={<LeaderBoard />} />
-           <Route path='/faq' element={<HelpFaq/>} />
-           <Route path="/calculater" element={<Calculater />} />
-           <Route path="*" element={<NotFound />} />
-         </Routes>
-       </BrowserRouter>
-       <ToastContainer />
+     
+     <BrowserRouter>
+      <Suspense fallback={<Loader />}>
+        <Header isNewNotificationOne={isNewNotification} notifications={notifications} setIsNewOneNotification={setIsNewNotification} />
+        <Routes>
+          <Route index element={<AppComponent />} />
+          <Route path="/leader-board" element={<Leaderboard />} />
+          <Route path='/faq' element={<HelpFaq />} />
+          <Route path="/calculater" element={<Calculater />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Footer />
+      </Suspense>
+      <ToastContainer />
+    </BrowserRouter>
+       
      </>
    );
 }

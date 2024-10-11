@@ -1,8 +1,5 @@
-const Loader = ({ loading }) => {
+const Loader = () => {
     
-    if (!loading) {
-      return null;
-    }
   
     return (
       <div className="h-[100vh] bg-[#101116] w-full flex justify-center items-center">

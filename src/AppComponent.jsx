@@ -17,24 +17,23 @@ import ResetCoolDownCard from './Components/Cards/ResetCoolDownCard';
 import AttackCard from './Components/Cards/AttactCard';
 
 // eslint-disable-next-line react/prop-types
-function AppComponent({isNewNotification,notifications,setIsNewNotification}) {
-  const [loading, setLoading] = useState(true);
+function AppComponent() {
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);  
-    }, 2000); 
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setLoading(false);  
+  //   }, 2000); 
 
-    return () => clearTimeout(timer); 
-  }, []);
+  //   return () => clearTimeout(timer); 
+  // }, []);
 
   return (
     <>
-      <Loader loading={loading} /> 
-      {!loading && (
-        <>
+      {/* <Loader loading={loading} />  */}
+       
           {/* <ToastContainer /> */}
-          <Header isNewNotificationOne={isNewNotification} notifications={notifications} setIsNewOneNotification={setIsNewNotification} />
+          {/* <Header isNewNotificationOne={isNewNotification} notifications={notifications} setIsNewOneNotification={setIsNewNotification} /> */}
           {/* Main Container for Cards */}
           <div className=" flex flex-col justify-end items-center lg:min-h-screen mt-16 lg:mt-10 p-4">
   {/* First Row of Cards */}
@@ -52,10 +51,10 @@ function AppComponent({isNewNotification,notifications,setIsNewNotification}) {
 
 </div>
 
-          <Footer />
+          {/* <Footer /> */}
         </>
-      )}
-    </>
+      
+  
   );
 }
 

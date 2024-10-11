@@ -36,8 +36,9 @@ const CompoundButtonCard = () => {
             >
               ✖
             </button>
+            <h1 className=' ms-2 -mb-3 mt-1'>Unstake Gems</h1>
  
-          <UnStack/>
+          <UnStack handleClose={handleClose} />
              
 
           
