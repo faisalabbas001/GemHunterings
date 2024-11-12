@@ -17,7 +17,7 @@ import Loader from './Loader';
 const AppComponent = lazy(() => import('./AppComponent'));
 const Leaderboard = lazy(() => import('./Pages/LeaderBoard'));
 const HelpFaq = lazy(() => import('./Pages/HelpFaq'));
-const Calculater = lazy(() => import('./Pages/Calculater'));
+const Calculater = lazy(() => import('./Pages/calculater'));
 const NotFound = lazy(() => import('./Pages/NotFound'));
 
 // Socket.IO client initialization
