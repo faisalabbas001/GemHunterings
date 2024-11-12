@@ -16,9 +16,9 @@ import Loader from './Loader';
 
 const AppComponent = lazy(() => import('./AppComponent'));
 const Leaderboard = lazy(() => import('./Pages/LeaderBoard'));
-const HelpFaq = lazy(() => import('./pages/HelpFaq'));
-const Calculater = lazy(() => import('./pages/Calculater'));
-const NotFound = lazy(() => import('./pages/NotFound'));
+const HelpFaq = lazy(() => import('./Pages/HelpFaq'));
+const Calculater = lazy(() => import('./Pages/Calculater'));
+const NotFound = lazy(() => import('./Pages/NotFound'));
 
 // Socket.IO client initialization
 const socket = io('http://localhost:5000', {
