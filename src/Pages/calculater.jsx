@@ -30,8 +30,12 @@ const Calculator = () => {
 
   return (
     <div className='flex justify-center items-center h-screen  px-4'>
-      <div className='shadow-lg p-8 rounded-lg bg-white bg-opacity-60 max-w-lg w-full'>
-        <h2 className='text-center mb-6 font-semibold text-xl text-gray-700'>
+      <div className='shadow-lg p-8 rounded-lg  max-w-lg w-full'  style={{
+        backgroundImage: `url("/ConvertGems.jpeg")`,
+        backgroundSize: 'cover', // Ensures the image covers the entire div
+        backgroundPosition: 'center', // Centers the image
+      }}>
+        <h2 className='text-center mb-6 font-semibold text-xl text-white'>
             Calculator
         </h2>
 

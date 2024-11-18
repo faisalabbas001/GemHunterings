@@ -67,8 +67,13 @@ export default function PurchaseProtection({ setisProtectionsShieldActive }) {
 
   return (
     <div className="text-center">
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div className="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+      <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="relative  p-6 rounded-lg shadow-lg w-full max-w-md"   style={{
+        backgroundImage: `url("/BuyProtection.jpeg")`,
+        backgroundSize: 'cover', // Ensures the image covers the entire div
+        backgroundPosition: '10% 33%', // Centers the image
+        backgroundRepeat:"no-repeat"
+      }}>
           <button
             onClick={() => setisProtectionsShieldActive(false)}
             className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
@@ -76,9 +81,9 @@ export default function PurchaseProtection({ setisProtectionsShieldActive }) {
             ✖️
           </button>
 
-          <h3 className="text-xl text-black">Remaining Time</h3>
-          <p className="mt-4 text-black font-semibold">Remaining Time ⏱⏱</p>
-          <p className="text-lg text-black font-bold">
+          <h3 className="text-xl text-white">Remaining Time</h3>
+          <p className="mt-4 text-white font-semibold">Remaining Time ⏱⏱</p>
+          <p className="text-lg text-white font-bold">
             <Countdown
               date={Date.now() + remainingTimeInSeconds * 1000} // Correct remaining time calculation
               renderer={renderer}
