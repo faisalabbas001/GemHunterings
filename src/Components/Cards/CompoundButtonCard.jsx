@@ -16,7 +16,7 @@ const CompoundButtonCard = () => {
     >
       {/* Card content with centered text */}
       <div className=" ">
-        <div className="font-normal text-xl text-white text-center">COMPOUND</div>
+        <div className="font-normal text-xl text-black text-center">COMPOUND</div>
       </div>
   
       {/* Button Section */}

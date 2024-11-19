@@ -15,6 +15,7 @@ import WithDrawGemsCard from './Components/Cards/WithDrawGemCard';
 import PurchaseProtectionCard from './Components/Cards/PurChaseProtectionCard';
 import ResetCoolDownCard from './Components/Cards/ResetCoolDownCard';
 import AttackCard from './Components/Cards/AttactCard';
+import ProtectionCard from "./Components/Cards/ProtectionCard"
 
 // eslint-disable-next-line react/prop-types
 function AppComponent() {
@@ -47,6 +48,7 @@ function AppComponent() {
     {/* <PurchaseProtectionCard /> */}
     <ResetCoolDownCard />
     <AttackCard />
+    <ProtectionCard />
   </div>
 
 </div>

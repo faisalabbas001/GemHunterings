@@ -16,7 +16,7 @@ const CompoundCard = () => {
     >
       {/* Card content with centered text */}
       <div className=" ">
-        <div className="font-normal text-xl text-white text-center">STAKE</div>
+        <div className="font-normal text-xl text-black text-center">STAKE</div>
       </div>
   
       {/* Button Section */}

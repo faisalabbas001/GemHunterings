@@ -81,9 +81,9 @@ export default function PurchaseProtection({ setisProtectionsShieldActive }) {
             ✖️
           </button>
 
-          <h3 className="text-xl text-white">Remaining Time</h3>
-          <p className="mt-4 text-white font-semibold">Remaining Time ⏱⏱</p>
-          <p className="text-lg text-white font-bold">
+          <h3 className="text-xl text-black">Remaining Time</h3>
+          <p className="mt-4 text-black font-semibold">Remaining Time ⏱⏱</p>
+          <p className="text-lg text-black font-bold">
             <Countdown
               date={Date.now() + remainingTimeInSeconds * 1000} // Correct remaining time calculation
               renderer={renderer}

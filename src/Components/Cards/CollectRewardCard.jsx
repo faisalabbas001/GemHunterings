@@ -16,7 +16,7 @@ const CollectRewardsCard = () => {
     >
       {/* Card content with centered text */}
       <div className=" ">
-        <div className="font-normal text-xl text-white text-center">Collect Daily Rewards</div>
+        <div className="font-normal text-xl ttext-black text-center">Collect Daily Rewards</div>
       </div>
   
       {/* Button Section */}

@@ -17,7 +17,7 @@ const WithDrawGemsCard = () => {
     >
       {/* Card content with centered text */}
       <div className=" ">
-        <div className="font-normal text-xl text-white text-center"> Reset   <br/>
+        <div className="font-normal text-xl text-black text-center"> Reset   <br/>
         CoolDown</div>
       </div>
   
