@@ -40,7 +40,7 @@ const CompoundButtonCard = () => {
               ✖
             </button>
 
-            <h1 className=' ms-2 -mb-3 mt-1'>Compound Gems</h1>
+            <h1 className=' ms-2 text-center -mb-3 mt-1'>Compound Gems</h1>
  
       <Compound/>
              

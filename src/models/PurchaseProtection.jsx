@@ -9,6 +9,7 @@ import { AppContext } from '../context/AppContext';
 // eslint-disable-next-line react/prop-types
 export default function PurchaseProtection({ setisProtectionsShieldActive }) {
   const { ProtectionTime, setShowUpdatedData } = useContext(AppContext);
+  console.log("cehking the prtection 55555555555",ProtectionTime)
   const [loading, setLoading] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
   const [remainingTimeInSeconds, setRemainingTimeInSeconds] = useState(ProtectionTime - Math.floor(Date.now() / 1000));

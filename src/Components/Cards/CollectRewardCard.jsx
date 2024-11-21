@@ -16,14 +16,14 @@ const CollectRewardsCard = () => {
     >
       {/* Card content with centered text */}
       <div className=" ">
-        <div className="font-normal text-xl ttext-black text-center">Collect Daily Rewards</div>
+        <div className="font-normal cursor-pointer  text-xl ttext-black text-center">Collect Daily Rewards</div>
       </div>
   
       {/* Button Section */}
       <div className=" absolute bottom-0 w-full ">
         <button
           onClick={handleOpen}
-          className="bg-[#756AB6]  w-full font-normal text-white py-2 px-4 border rounded-3xl transition duration-300"
+          className="bg-[#756AB6] cursor-pointer   w-full font-normal text-white py-2 px-4 border rounded-3xl transition duration-300"
         >
           Button
         </button>

@@ -9,6 +9,9 @@ import { AppContext } from '../context/AppContext';
 export default function UnlockGems() {
   const { contractTime  } = useContext(AppContext); // contractTime in seconds (Unix time)
 
+  
+  console.log("unloack gems ",contractTime)
+
 //  const contractTime=1728034884
   
   const [open, setOpen] = useState(false);

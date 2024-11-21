@@ -23,7 +23,7 @@ const CompoundCard = () => {
       <div className=" absolute bottom-0 w-full ">
         <button
           onClick={handleOpen}
-          className="bg-[#74ED91] w-full font-normal text-white py-2 px-4 border rounded-3xl transition duration-300"
+          className="bg-[#74ED91]  w-full font-normal text-white py-2 px-4 border rounded-3xl transition duration-300"
         >
           Button
         </button>

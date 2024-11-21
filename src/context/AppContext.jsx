@@ -117,12 +117,16 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+
+
+
   return (
     <AppContext.Provider
       value={{
-        contractTime: Number(conversionLock?.time) || 0,
-        ProtectionTime: Number(protectionEndTimeAmount) || 0, // Ensures ProtectionTime updates
-        CoolDownTime: Number(stealCooldownAmount) || 0,
+       contractTime: parseInt(BigInt(conversionLock?.time || 0), 10),
+ProtectionTime: parseInt(BigInt(protectionEndTimeAmount || 0), 10),
+CoolDownTime: parseInt(BigInt(stealCooldownAmount || 0), 10),
+
         gemBalance,
         totalStacked,
         conversionLock,

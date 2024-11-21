@@ -23,7 +23,7 @@ const AttackCard = () => {
       <div className=" absolute bottom-0 w-full ">
         <button
           onClick={handleOpen}
-          className="bg-[#181717]  w-full font-normal text-white py-2 px-4 border rounded-3xl transition duration-300"
+          className="bg-[#181717] cursor-pointer  w-full font-normal text-white py-2 px-4 border rounded-3xl transition duration-300"
         >
           Button
         </button>
@@ -31,7 +31,7 @@ const AttackCard = () => {
             {/* Modal */}
 
             {open && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed  z-10 inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
             <button
               onClick={handleClose}

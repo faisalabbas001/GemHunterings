@@ -13,6 +13,7 @@ import { AppContext } from '../context/AppContext';
 
 export default function CollectDailyRewards({handleClose}) {
   const { contractTime } = useContext(AppContext); // Contract time (Unix timestamp in seconds)
+  
   console.log("contract time is here collect daily rewards", contractTime);
 
   const [isTimeUp, setIsTimeUp] = useState(false); // Track if the countdown is complete
@@ -27,7 +28,7 @@ export default function CollectDailyRewards({handleClose}) {
         abi: abi,
         address: contractAddress,
         functionName: 'cashInDailyRewards',
-        args: [userAddress],
+        // args: [userAddress],
       });
       const hash = await writeContract(config, request);
       const transactionReceipt = await waitForTransactionReceipt(config, {
@@ -64,7 +65,9 @@ export default function CollectDailyRewards({handleClose}) {
   };
 
   // Calculate remaining time (contractTime is in seconds, Date.now() is in milliseconds)
-  const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+  const currentTimeInSeconds = Math.floor(Date.now() / 1000 );
+
+  console.log("ruuing time is",currentTimeInSeconds)
   const remainingTimeInSeconds = Math.max(contractTime - currentTimeInSeconds, 0); // Ensure non-negative remaining time
 
   return (
@@ -80,9 +83,9 @@ export default function CollectDailyRewards({handleClose}) {
             </button>
 
             {/* Modal content */}
-            <h3 className="text-xl text-black">Daily Reward: 0 ETH</h3>
-            <p className="mt-4 text-black font-semibold">Remaining Time ⏱</p>
-            <p className="text-lg text-black font-bold">
+            <h3 className="text-xl text-center text-black">Daily Reward: 0 ETH</h3>
+            <p className="mt-4 text-center  text-black font-semibold">Remaining Time ⏱</p>
+            <p className="text-lg text-center  text-black font-bold">
               <Countdown
                 date={Date.now() + remainingTimeInSeconds * 1000} // Calculate remaining time in milliseconds
                 renderer={renderer}

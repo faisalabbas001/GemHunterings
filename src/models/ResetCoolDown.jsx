@@ -15,7 +15,7 @@ import { formatEther, parseEther } from 'viem';
 
 export default function ResetCoolDown({handleClose}) {
   const { CoolDownTime, stakedTokensAmount } = useContext(AppContext); // Access CoolDownTime from context
-  // console.log("my reset cooldown time is here", CoolDownTime);
+  console.log("my reset cooldown time is here", CoolDownTime);
 
   //  const CoolDownTime=1728035364
   const [isTimeUp, setIsTimeUp] = useState(false); // Tracks if the countdown is complete
@@ -115,9 +115,9 @@ export default function ResetCoolDown({handleClose}) {
             </button>
 
             {/* Modal content */}
-            <h3 className="text-xl text-black">Remaining Time</h3>
-            <p className="mt-4 text-black font-semibold">Time Remaining ⏱</p>
-            <p className="text-lg text-black font-bold">
+            <h3 className="text-xl text-center  text-black">Remaining Time</h3>
+            <p className="mt-4 text-center  text-black font-semibold">Time Remaining ⏱</p>
+            <p className="text-lg text-black font-bold text-center ">
               <Countdown
                 date={Date.now() + remainingTimeInSeconds * 1000} // Set countdown timer correctly
                 renderer={renderer}

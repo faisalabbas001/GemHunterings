@@ -63,14 +63,14 @@ const showloading=()=>{
         abi: abi,
         address: contractAddress,
         functionName: 'convertGems',
-        args:[parseEther(inputValue),eth]
+        args:[eth]
       });
       const hash = await writeContract(config, request);
       const transactionReceipt = await waitForTransactionReceipt(config, {
         // confirmations: 2,
         hash: hash,
       });
-      // toast.success(' WithDrawGems  Successfully !');
+      toast.success(' WithDrawGems  Successfully !');
     } catch (error) {
       console.log(error);
       toast.error('Failed to WithDrawGems . Please try again.');
@@ -122,7 +122,9 @@ const showloading=()=>{
              {/* <button onClick={handleWithdraw} className='text-black bg-red-500'  >
                 withdraw
               </button> */}
-              <button className="mt-6 bg-red-500 flex justify-center items-center  text-white px-4 py-2 rounded w-full relative" disabled={loading}  onClick={showloading}>
+              <button  onClick={ ()=> {
+              showloading();
+               handleWithdraw()}} className="mt-6 bg-red-500 flex justify-center items-center  text-white px-4 py-2 rounded w-full relative" disabled={loading} >
               {loading && (
                 <div
                   className="absolute inset-0 flex items-center justify-center"
@@ -137,7 +139,7 @@ const showloading=()=>{
                   </div>
                 </div>
               )}
-              <span onClick={handleWithdraw} className={loading ? 'invisible' : ''}>
+              <span  className={loading ? 'invisible' : ''}>
               withdraw
               </span>
             </button>
