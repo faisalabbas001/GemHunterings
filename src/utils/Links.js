@@ -1,1 +1,1 @@
-export const ApiUrl = "http://localhost:5000/api/v1/notification/";
+export const ApiUrl = "https://gemhunterserver-production.up.railway.app/api/v1/notification/";
