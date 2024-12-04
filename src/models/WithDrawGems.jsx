@@ -112,7 +112,7 @@ const showloading=()=>{
             </button>
 
             {/* Modal content */}
-            <input type="text" placeholder="Enter Amount" className="w-full p-2 mt-4 border text-black border-gray-300 rounded" onChange={(e)=>setInputValue(e.target.value)} value={inputValue} />
+            {/* <input type="text" placeholder="Enter Amount" className="w-full p-2 mt-4 border text-black border-gray-300 rounded" onChange={(e)=>setInputValue(e.target.value)} value={inputValue} /> */}
             <h3 className="text-xl text-black">To Asset</h3>
             <select className='text-black' onChange={handleSelectChange} >
               <option value="ETH"  className='text-black'>ETH</option>

@@ -31,7 +31,7 @@ export const AppProvider = ({ children }) => {
   const [stealCooldownAmount, setStealCooldownAmount] = useState(0);
   const [stealStreakAmount, setStealStreakAmount] = useState(0);
   const [ShowUpdatedData, setShowUpdatedData] = useState(false);
-
+const [test,settest]=useState()
   const { data: balanceData } = useBalance({
     address: userAddress,
     token: testTokenAddress,
@@ -53,6 +53,8 @@ export const AppProvider = ({ children }) => {
         args: [userAddress],
       });
 
+      settest(result)
+
       setShowUpdatedData(false); // Reset data fetch trigger after successful fetch
       setGemBalance(Number(result.gemBalanceAmount));
       setTotalStacke(formatEther(result.stakedTokensAmount));
@@ -64,6 +66,7 @@ export const AppProvider = ({ children }) => {
       setStealStreakAmount(Number(result.stealStreakAmount));
 
       console.log("User data result:", result);
+   
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -119,7 +122,7 @@ export const AppProvider = ({ children }) => {
 
 
 
-
+console.log("testing of the screen is that here",test)
   return (
     <AppContext.Provider
       value={{
