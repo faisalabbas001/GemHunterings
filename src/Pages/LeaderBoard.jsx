@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
+import { ApiUrl } from '../utils/Links';
 
 const Leaderboard = () => {
     const [activeTab, setActiveTab] = useState('hunters'); // default tab
@@ -15,7 +16,8 @@ const Leaderboard = () => {
     // Fetch data from API
     const GetDataFromApi = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/v1/get-all/");
+            const res = await axios.get(`${ApiUrl}get-all/`);  //(`"http://localhost:5000/api/v1/get-all/");
+                
             const apiData = res.data;
             console.log(apiData);
 
