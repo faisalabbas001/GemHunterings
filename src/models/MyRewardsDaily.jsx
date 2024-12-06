@@ -13,7 +13,7 @@ import { AppContext } from '../context/AppContext';
 
 export default function CollectDailyRewards({handleClose}) {
   const { contractTime } = useContext(AppContext); // Contract time (Unix timestamp in seconds)
-  
+  // const   contractTime =1733403891
   console.log("contract time is here collect daily rewards", contractTime);
 
   const [isTimeUp, setIsTimeUp] = useState(false); // Track if the countdown is complete

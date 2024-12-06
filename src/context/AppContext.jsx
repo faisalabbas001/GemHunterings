@@ -52,17 +52,21 @@ const [test,settest]=useState()
         functionName: 'getUserData',
         args: [userAddress],
       });
-
+      console.log("User data result:", result);
       settest(result)
-
+      console.log("User data result:", result);
       setShowUpdatedData(false); // Reset data fetch trigger after successful fetch
       setGemBalance(Number(result.gemBalanceAmount));
       setTotalStacke(formatEther(result.stakedTokensAmount));
-      setConversionLock(result.conversionLock); // Assuming conversionLock has a time property
+      setConversionLock({
+        amount: Number(result?.conversionLock.amount),
+        time: Number(result?.conversionLock.time),
+        isReleased: result?.conversionLock.isReleased,
+      }); 
       setNoOfCompoundsAmount(Number(result.noOfCompoundsAmount));
-      setProtectionEndTimeAmount(Number(result.protectionEndTimeAmount));
-      setStakedTokensAmount(Number(result.stakedTokensAmount));
-      setStealCooldownAmount(Number(result.stealCooldownAmount));
+      setProtectionEndTimeAmount(Number(result?.protectionEndTimeAmount));
+      setStakedTokensAmount(Number(result?.stakedTokensAmount));
+      setStealCooldownAmount(Number(result?.stealCooldownAmount));
       setStealStreakAmount(Number(result.stealStreakAmount));
 
       console.log("User data result:", result);
@@ -122,13 +126,15 @@ const [test,settest]=useState()
 
 
 
-console.log("testing of the screen is that here",test)
+ 
+
+
   return (
     <AppContext.Provider
       value={{
-       contractTime: parseInt(BigInt(conversionLock?.time || 0), 10),
-ProtectionTime: parseInt(BigInt(protectionEndTimeAmount || 0), 10),
-CoolDownTime: parseInt(BigInt(stealCooldownAmount || 0), 10),
+        contractTime: conversionLock?.time || 0, 
+        ProtectionTime: protectionEndTimeAmount || 0, 
+        CoolDownTime: stealCooldownAmount || 0, 
 
         gemBalance,
         totalStacked,

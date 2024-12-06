@@ -14,11 +14,11 @@ import { toast } from 'react-toastify';
 import { formatEther, parseEther } from 'viem';
 
 export default function ResetCoolDown({handleClose}) {
-  const { CoolDownTime, stakedTokensAmount } = useContext(AppContext); // Access CoolDownTime from context
+  const { CoolDownTime, stakedTokensAmount } = useContext(AppContext); 
   console.log("my reset cooldown time is here", CoolDownTime);
 
   //  const CoolDownTime=1728035364
-  const [isTimeUp, setIsTimeUp] = useState(false); // Tracks if the countdown is complete
+  const [isTimeUp, setIsTimeUp] = useState(false); 
 
 
   // Countdown completion handler
